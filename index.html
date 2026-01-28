@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A neobrutalism-inspired static blog built with raw HTML, CSS, and JavaScript.">
+    <meta property="og:title" content="Neobrutalism Blog">
+    <meta property="og:description" content="A neobrutalism-inspired static blog built with raw HTML, CSS, and JavaScript.">
+    <meta property="og:tags" content="neobrutalism, static, blog">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aibizsolution.github.io/blog/">
+    <title>Neobrutalism Blog</title>
+    <link rel="icon" href="favicon.svg">
+    <link rel="stylesheet" href="styles/neo-brutalism.css">
+    <!-- marked.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <blog-header></blog-header>
+
+    <main class="container" style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
+        <!-- Search Section -->
+        <section id="search-section" style="margin-bottom: 2rem;">
+            <input type="text" id="search-input" class="neo-input" placeholder="Search posts by title or tags...">
+            <p id="active-tag" style="margin-top: 0.75rem; color: var(--muted-color);"></p>
+        </section>
+
+        <!-- Post List View -->
+        <section id="post-list-view">
+            <div id="post-list" style="display: grid; gap: 1.5rem;">
+                <!-- Posts will be injected here -->
+            </div>
+        </section>
+
+        <!-- Post Content View -->
+        <section id="post-content-view" style="display: none;">
+            <button id="back-btn" class="neo-btn" style="margin-bottom: 1.5rem;">← Back to list</button>
+            <article id="post-content" class="neo-card">
+                <!-- Post content will be injected here -->
+            </article>
+        </section>
+    </main>
+
+    <blog-footer></blog-footer>
+
+    <!-- Embedded data fallback for file:// usage -->
+    <script id="posts-data" type="application/json">
+      [
+        {
+          "slug": "getting-started",
+          "title": "Getting Started with This Blog",
+          "date": "2026-01-27",
+          "tags": ["intro", "welcome"],
+          "summary": "Welcome to a neobrutalism-inspired blog built with raw HTML, CSS, and JavaScript."
+        },
+        {
+          "slug": "neobrutalism-design",
+          "title": "Neobrutalism Design Basics",
+          "date": "2026-01-26",
+          "tags": ["design", "neobrutalism"],
+          "summary": "Bold borders, hard shadows, and high contrast colors define the neobrutalism aesthetic."
+        },
+        {
+          "slug": "static-sites",
+          "title": "Why Static Sites Still Win",
+          "date": "2026-01-25",
+          "tags": ["architecture", "static"],
+          "summary": "Static sites are fast, portable, and easy to host without any backend stack."
+        }
+      ]
+    </script>
+    <script id="post-getting-started" type="text/markdown">
+# Getting Started with This Blog
+
+This blog is a simple, static site designed to work anywhere without a build step. It is built with raw HTML, CSS, and JavaScript, and it keeps everything in plain files.
+
+The goal is to make content portable and reliable. Each post lives in its own Markdown file, while a small JSON index provides metadata for search and filtering.
+
+Highlights in this setup:
+- Pure static hosting with GitHub Pages
+- No database or server required
+- Lightweight, easy to maintain structure
+
+Example snippet:
+```html
+<main class="container">
+  <h1>Neobrutalism Blog</h1>
+  <p>Built with raw HTML, CSS, and JavaScript.</p>
+</main>
+```
+    </script>
+    <script id="post-neobrutalism-design" type="text/markdown">
+# Neobrutalism Design Basics
+
+Neobrutalism is all about honesty in interface design. You see bold borders, hard shadows, high contrast colors, and layouts that feel physical and tactile.
+
+This blog keeps the intensity moderate while still using the signature visual cues. It avoids soft gradients, blur, or overly delicate details.
+
+Core traits to remember:
+- Thick borders with sharp corners
+- Hard, offset shadows (no blur)
+- High contrast accents for emphasis
+
+Example CSS:
+```css
+.neo-card {
+  border: 3px solid #141414;
+  box-shadow: 4px 4px 0 #141414;
+}
+```
+    </script>
+    <script id="post-static-sites" type="text/markdown">
+# Why Static Sites Still Win
+
+Static sites are fast, portable, and easy to host. You can deploy them to GitHub Pages, CDN hosts, or any static file server without extra infrastructure.
+
+They work well when your content does not need a dynamic backend. Even for blogs, a simple JSON index plus Markdown content can cover most needs.
+
+Benefits you get right away:
+- Simple deployment pipeline
+- Strong caching and fast load times
+- Minimal maintenance overhead
+
+Example fetch pattern:
+```js
+const response = await fetch('posts.json');
+const posts = await response.json();
+```
+    </script>
+
+    <script>
+        (() => {
+            const BOOT_DELAY = 300;
+
+            const createDebounce = (fn, delay = 300) => {
+                let timeoutId;
+                return (...args) => {
+                    window.clearTimeout(timeoutId);
+                    timeoutId = window.setTimeout(() => fn(...args), delay);
+                };
+            };
+
+            const getEmbeddedPosts = () => {
+                const dataEl = document.getElementById('posts-data');
+                if (!dataEl) {
+                    return { posts: [], error: { message: 'Posts data not found.' } };
+                }
+                try {
+                    const posts = JSON.parse(dataEl.textContent || '[]');
+                    return { posts, error: null };
+                } catch (error) {
+                    return { posts: [], error: { message: 'Invalid embedded posts data.' } };
+                }
+            };
+
+            const getEmbeddedMarkdown = (slug) => {
+                const markdownEl = document.getElementById(`post-${slug}`);
+                if (!markdownEl) {
+                    return { markdown: '', error: { message: 'Post not found.' } };
+                }
+                return { markdown: markdownEl.textContent || '', error: null };
+            };
+
+            const filterPosts = (posts, query, tag) => {
+                const safePosts = Array.isArray(posts) ? posts : [];
+                const normalizedQuery = (query || '').trim().toLowerCase();
+                const normalizedTag = (tag || '').trim().toLowerCase();
+
+                return safePosts.filter((post) => {
+                    const title = String(post?.title || '').toLowerCase();
+                    const tags = Array.isArray(post?.tags) ? post.tags : [];
+                    const normalizedTags = tags.map((item) => String(item || '').toLowerCase());
+
+                    const matchesQuery =
+                        normalizedQuery.length === 0 ||
+                        title.includes(normalizedQuery) ||
+                        normalizedTags.some((item) => item.includes(normalizedQuery));
+                    const matchesTag = normalizedTag.length === 0 || normalizedTags.includes(normalizedTag);
+
+                    return matchesQuery && matchesTag;
+                });
+            };
+
+            const renderPostMeta = (post) => {
+                if (!post) {
+                    return '';
+                }
+                const date = post.date ? String(post.date) : '';
+                const dateMarkup = date
+                    ? `<time datetime="${date}" style="color: var(--muted-color); font-size: 0.9rem; display: inline-block;">${date}</time>`
+                    : '';
+                const tags = Array.isArray(post.tags) ? post.tags : [];
+                const tagsMarkup = tags.length > 0
+                    ? `<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">${tags
+                          .map((tag) => `<span class="neo-tag">${tag}</span>`)
+                          .join('')}</div>`
+                    : '';
+                return `<div style="margin-bottom: 1.25rem;">${dateMarkup}${tagsMarkup}</div>`;
+            };
+
+            const initFallback = () => {
+                if (window.__BLOG_BOOTSTRAPPED__) {
+                    return;
+                }
+
+                let allPosts = [];
+                let activeTag = '';
+                const listContainer = document.getElementById('post-list');
+                const listView = document.getElementById('post-list-view');
+                const contentView = document.getElementById('post-content-view');
+                const searchSection = document.getElementById('search-section');
+                const contentContainer = document.getElementById('post-content');
+                const activeTagLabel = document.getElementById('active-tag');
+                const searchInput = document.getElementById('search-input');
+
+                const renderPostList = (posts) => {
+                    listContainer.innerHTML = '';
+                    if (posts.length === 0) {
+                        listContainer.innerHTML = '<p>No posts found.</p>';
+                        return;
+                    }
+
+                    posts.forEach((post) => {
+                        const card = document.createElement('div');
+                        card.className = 'neo-card';
+                        const date = post.date ? String(post.date) : '';
+                        const dateMarkup = date
+                            ? `<time datetime="${date}" style="color: var(--muted-color); font-size: 0.9rem; margin-bottom: 0.5rem; display: inline-block;">${date}</time>`
+                            : '';
+                        card.innerHTML = `
+                            <h3><a href="?post=${post.slug}" style="text-decoration: none; color: inherit;">${post.title}</a></h3>
+                            ${dateMarkup}
+                            <p>${post.summary}</p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                                ${post.tags
+                                    .map((tag) => {
+                                        const normalized = String(tag || '').toLowerCase();
+                                        const isActive = activeTag && normalized === activeTag.toLowerCase();
+                                        const className = isActive ? 'neo-tag neo-tag--accent' : 'neo-tag';
+                                        return `<button type="button" class="${className}" data-tag="${tag}" style="background: var(--surface-color);">${tag}</button>`;
+                                    })
+                                    .join('')}
+                            </div>
+                        `;
+                        listContainer.appendChild(card);
+                    });
+                };
+
+                const showPost = (slug) => {
+                    if (slug) {
+                        listView.style.display = 'none';
+                        searchSection.style.display = 'none';
+                        contentView.style.display = 'block';
+
+                        contentContainer.innerHTML = 'Loading...';
+                        const postMeta = allPosts.find((post) => post.slug === slug);
+                        const result = getEmbeddedMarkdown(slug);
+                        if (result?.markdown) {
+                            if (typeof marked === 'undefined') {
+                                contentContainer.textContent = result.markdown;
+                                return;
+                            }
+                            contentContainer.innerHTML = `${renderPostMeta(postMeta)}${marked.parse(result.markdown)}`;
+                        } else {
+                            const message = result?.error?.message || 'Post not found. Please go back to the list.';
+                            contentContainer.innerHTML = `<p>${message}</p>`;
+                        }
+                    } else {
+                        listView.style.display = 'block';
+                        searchSection.style.display = 'block';
+                        contentView.style.display = 'none';
+                    }
+                };
+
+                const initRouter = (callback) => {
+                    const handleRouteChange = () => {
+                        const params = new URLSearchParams(window.location.search);
+                        const slug = params.get('post');
+                        callback(slug && slug.length > 0 ? slug : null);
+                    };
+                    window.addEventListener('popstate', handleRouteChange);
+                    handleRouteChange();
+                };
+
+                const postsResult = getEmbeddedPosts();
+                allPosts = postsResult?.posts || [];
+                if (postsResult?.error) {
+                    listContainer.innerHTML = `<p>${postsResult.error.message}</p>`;
+                    return;
+                }
+                renderPostList(allPosts);
+
+                const handleSearch = createDebounce((query) => {
+                    const filtered = filterPosts(allPosts, query, activeTag);
+                    renderPostList(filtered);
+                }, 300);
+                searchInput.addEventListener('input', (event) => {
+                    handleSearch(event.target.value);
+                });
+
+                listContainer.addEventListener('click', (event) => {
+                    const target = event.target;
+                    if (!(target instanceof HTMLElement)) {
+                        return;
+                    }
+                    const tag = target.getAttribute('data-tag');
+                    if (!tag) {
+                        return;
+                    }
+                    activeTag = activeTag && activeTag.toLowerCase() === tag.toLowerCase() ? '' : tag;
+                    activeTagLabel.textContent = activeTag ? `Active tag: ${activeTag} (click again to clear)` : '';
+                    const filtered = filterPosts(allPosts, searchInput.value, activeTag);
+                    renderPostList(filtered);
+                });
+
+                document.getElementById('back-btn').addEventListener('click', () => {
+                    window.history.pushState({}, '', window.location.pathname);
+                    showPost(null);
+                });
+
+                initRouter((slug) => {
+                    showPost(slug);
+                });
+            };
+
+            document.addEventListener('DOMContentLoaded', () => {
+                window.setTimeout(initFallback, BOOT_DELAY);
+            });
+        })();
+    </script>
+
+    <!-- Web Components -->
+    <script type="module" src="components/blog-header.js"></script>
+    <script type="module" src="components/blog-footer.js"></script>
+
+    <!-- Main Logic -->
+    <script type="module">
+        import { initRouter } from './scripts/router.js';
+        import { initSearch } from './scripts/search.js';
+        import { loadPosts, loadPost } from './scripts/post-loader.js';
+
+        window.__BLOG_BOOTSTRAPPED__ = true;
+
+        let allPosts = [];
+        let activeTag = '';
+
+        function createDebounce(fn, delay = 300) {
+            let timeoutId;
+            return (...args) => {
+                window.clearTimeout(timeoutId);
+                timeoutId = window.setTimeout(() => fn(...args), delay);
+            };
+        }
+
+        function renderPostMeta(post) {
+            if (!post) {
+                return '';
+            }
+            const date = post.date ? String(post.date) : '';
+            const dateMarkup = date
+                ? `<time datetime="${date}" style="color: var(--muted-color); font-size: 0.9rem; display: inline-block;">${date}</time>`
+                : '';
+            const tags = Array.isArray(post.tags) ? post.tags : [];
+            const tagsMarkup = tags.length > 0
+                ? `<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">${tags
+                      .map((tag) => `<span class="neo-tag">${tag}</span>`)
+                      .join('')}</div>`
+                : '';
+            return `<div style="margin-bottom: 1.25rem;">${dateMarkup}${tagsMarkup}</div>`;
+        }
+
+        async function renderPostList(posts) {
+            const listContainer = document.getElementById('post-list');
+            listContainer.innerHTML = '';
+
+            if (posts.length === 0) {
+                listContainer.innerHTML = '<p>No posts found.</p>';
+                return;
+            }
+
+            posts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'neo-card';
+                const date = post.date ? String(post.date) : '';
+                const dateMarkup = date
+                    ? `<time datetime="${date}" style="color: var(--muted-color); font-size: 0.9rem; margin-bottom: 0.5rem; display: inline-block;">${date}</time>`
+                    : '';
+                card.innerHTML = `
+                    <h3><a href="?post=${post.slug}" style="text-decoration: none; color: inherit;">${post.title}</a></h3>
+                    ${dateMarkup}
+                    <p>${post.summary}</p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                        ${post.tags.map(tag => {
+                            const normalized = String(tag || '').toLowerCase();
+                            const isActive = activeTag && normalized === activeTag.toLowerCase();
+                            const className = isActive ? 'neo-tag neo-tag--accent' : 'neo-tag';
+                            return `<button type="button" class="${className}" data-tag="${tag}" style="background: var(--surface-color);">${tag}</button>`;
+                        }).join('')}
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        async function showPost(slug) {
+            const listView = document.getElementById('post-list-view');
+            const contentView = document.getElementById('post-content-view');
+            const searchSection = document.getElementById('search-section');
+            const contentContainer = document.getElementById('post-content');
+
+            if (slug) {
+                listView.style.display = 'none';
+                searchSection.style.display = 'none';
+                contentView.style.display = 'block';
+                
+                contentContainer.innerHTML = 'Loading...';
+                const postMeta = allPosts.find((post) => post.slug === slug);
+                const result = await loadPost(slug);
+                if (result?.html) {
+                    contentContainer.innerHTML = `${renderPostMeta(postMeta)}${result.html}`;
+                } else {
+                    const message = result?.error?.message || 'Post not found. Please go back to the list.';
+                    contentContainer.innerHTML = `<p>${message}</p>`;
+                }
+            } else {
+                listView.style.display = 'block';
+                searchSection.style.display = 'block';
+                contentView.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            const listContainer = document.getElementById('post-list');
+            const postsResult = await loadPosts();
+            allPosts = postsResult?.posts || [];
+            if (postsResult?.error) {
+                listContainer.innerHTML = `<p>${postsResult.error.message}</p>`;
+            } else {
+                renderPostList(allPosts);
+            }
+
+            const activeTagLabel = document.getElementById('active-tag');
+
+            // Router
+            initRouter((slug) => {
+                showPost(slug);
+            });
+
+            // Search
+            const searchInput = document.getElementById('search-input');
+            const handleSearch = createDebounce((query) => {
+                const filtered = initSearch(allPosts, query, activeTag);
+                renderPostList(filtered);
+            }, 300);
+            searchInput.addEventListener('input', (e) => {
+                handleSearch(e.target.value);
+            });
+
+            // Tag filtering (event delegation)
+            document.getElementById('post-list').addEventListener('click', (event) => {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) {
+                    return;
+                }
+                const tag = target.getAttribute('data-tag');
+                if (!tag) {
+                    return;
+                }
+                activeTag = activeTag && activeTag.toLowerCase() === tag.toLowerCase() ? '' : tag;
+                activeTagLabel.textContent = activeTag ? `Active tag: ${activeTag} (click again to clear)` : '';
+                const filtered = initSearch(allPosts, searchInput.value, activeTag);
+                renderPostList(filtered);
+            });
+
+            // Back button
+            document.getElementById('back-btn').addEventListener('click', () => {
+                window.history.pushState({}, '', window.location.pathname);
+                showPost(null);
+            });
+        });
+    </script>
+</body>
+</html>

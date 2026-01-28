@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "getting-started",
+    "title": "Getting Started with This Blog",
+    "date": "2026-01-27",
+    "tags": ["intro", "welcome"],
+    "summary": "Welcome to a neobrutalism-inspired blog built with raw HTML, CSS, and JavaScript."
+  },
+  {
+    "slug": "neobrutalism-design",
+    "title": "Neobrutalism Design Basics",
+    "date": "2026-01-26",
+    "tags": ["design", "neobrutalism"],
+    "summary": "Bold borders, hard shadows, and high contrast colors define the neobrutalism aesthetic."
+  },
+  {
+    "slug": "static-sites",
+    "title": "Why Static Sites Still Win",
+    "date": "2026-01-25",
+    "tags": ["architecture", "static"],
+    "summary": "Static sites are fast, portable, and easy to host without any backend stack."
+  }
+]
