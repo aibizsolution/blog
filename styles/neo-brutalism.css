@@ -204,3 +204,15 @@ a:hover {
     display: none !important; /* Hide TOC on mobile for simplicity, or make it inline */
   }
 }
+
+/* TOC Sidebar Links */
+.toc-link {
+  transition: color 140ms ease;
+}
+
+.toc-link:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--accent-color) !important;
+  transform: translateX(4px);
+}

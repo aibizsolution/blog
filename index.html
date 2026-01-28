@@ -460,19 +460,13 @@ const posts = await response.json();
                             li.style.paddingLeft = heading.tagName === 'H3' ? '1rem' : '0';
 
                             const a = document.createElement('a');
+                            a.className = 'toc-link';
                             a.href = `#${heading.id}`;
                             a.textContent = heading.textContent;
                             a.style.textDecoration = 'none';
                             a.style.fontSize = '0.9rem';
                             a.style.display = 'block';
                             a.style.borderBottom = '1px solid transparent';
-
-                            a.addEventListener('mouseenter', () => {
-                                a.style.color = 'var(--accent-color)';
-                            });
-                            a.addEventListener('mouseleave', () => {
-                                a.style.color = 'inherit';
-                            });
 
                             li.appendChild(a);
                             tocList.appendChild(li);
