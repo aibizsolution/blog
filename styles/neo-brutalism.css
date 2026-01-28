@@ -216,3 +216,7 @@ a:hover {
   color: var(--accent-color) !important;
   transform: translateX(4px);
 }
+
+html {
+  scroll-behavior: smooth;
+}
