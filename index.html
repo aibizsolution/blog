@@ -21,16 +21,17 @@
 <body>
     <blog-header></blog-header>
 
-    <main class="container" style="max-width: 800px; margin: 0 auto; padding: 0 1rem;">
+    <main class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
         <!-- Search Section -->
-        <section id="search-section" style="margin-bottom: 2rem;">
+        <section id="search-section"
+            style="margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
             <input type="text" id="search-input" class="neo-input" placeholder="Search posts by title or tags...">
             <p id="active-tag" style="margin-top: 0.75rem; color: var(--muted-color);"></p>
         </section>
 
         <!-- Post List View -->
         <section id="post-list-view">
-            <div id="post-list" style="display: grid; gap: 1.5rem;">
+            <div id="post-list" style="display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto;">
                 <!-- Posts will be injected here -->
             </div>
         </section>
@@ -38,9 +39,22 @@
         <!-- Post Content View -->
         <section id="post-content-view" style="display: none;">
             <button id="back-btn" class="neo-btn" style="margin-bottom: 1.5rem;">← Back to list</button>
-            <article id="post-content" class="neo-card">
-                <!-- Post content will be injected here -->
-            </article>
+
+            <div class="post-layout"
+                style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; align-items: start;">
+                <aside id="toc-sidebar" style="position: sticky; top: 2rem; display: none;">
+                    <nav class="neo-card" style="padding: 1rem;">
+                        <h4
+                            style="margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem;">
+                            Contents</h4>
+                        <ul id="toc-list" style="list-style: none; padding: 0; margin: 0;"></ul>
+                    </nav>
+                </aside>
+
+                <article id="post-content" class="neo-card" style="min-width: 0;">
+                    <!-- Post content will be injected here -->
+                </article>
+            </div>
         </section>
     </main>
 
@@ -421,6 +435,51 @@ const posts = await response.json();
                 const result = await loadPost(slug);
                 if (result?.html) {
                     contentContainer.innerHTML = `${renderPostMeta(postMeta)}${result.html}`;
+
+                    // Generate TOC
+                    const headings = contentContainer.querySelectorAll('h1, h2, h3');
+                    const tocList = document.getElementById('toc-list');
+                    const tocSidebar = document.getElementById('toc-sidebar');
+
+                    if (headings.length > 0) {
+                        tocList.innerHTML = '';
+                        tocSidebar.style.display = 'block';
+
+                        headings.forEach((heading, index) => {
+                            // Assign ID if missing
+                            if (!heading.id) {
+                                const slug = heading.textContent
+                                    .toLowerCase()
+                                    .replace(/[^a-z0-9]+/g, '-')
+                                    .replace(/(^-|-$)/g, '');
+                                heading.id = slug || `heading-${index}`;
+                            }
+
+                            const li = document.createElement('li');
+                            li.style.marginBottom = '0.5rem';
+                            li.style.paddingLeft = heading.tagName === 'H3' ? '1rem' : '0';
+
+                            const a = document.createElement('a');
+                            a.href = `#${heading.id}`;
+                            a.textContent = heading.textContent;
+                            a.style.textDecoration = 'none';
+                            a.style.fontSize = '0.9rem';
+                            a.style.display = 'block';
+                            a.style.borderBottom = '1px solid transparent';
+
+                            a.addEventListener('mouseenter', () => {
+                                a.style.color = 'var(--accent-color)';
+                            });
+                            a.addEventListener('mouseleave', () => {
+                                a.style.color = 'inherit';
+                            });
+
+                            li.appendChild(a);
+                            tocList.appendChild(li);
+                        });
+                    } else {
+                        tocSidebar.style.display = 'none';
+                    }
                 } else {
                     const message = result?.error?.message || 'Post not found. Please go back to the list.';
                     contentContainer.innerHTML = `<p>${message}</p>`;

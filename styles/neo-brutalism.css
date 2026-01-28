@@ -195,3 +195,12 @@ a:hover {
     font-size: 0.98rem;
   }
 }
+
+@media (max-width: 850px) {
+  .post-layout {
+    grid-template-columns: 1fr !important;
+  }
+  #toc-sidebar {
+    display: none !important; /* Hide TOC on mobile for simplicity, or make it inline */
+  }
+}
