@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A neobrutalism-inspired static blog built with raw HTML, CSS, and JavaScript.">
     <meta property="og:title" content="Neobrutalism Blog">
-    <meta property="og:description" content="A neobrutalism-inspired static blog built with raw HTML, CSS, and JavaScript.">
+    <meta property="og:description"
+        content="A neobrutalism-inspired static blog built with raw HTML, CSS, and JavaScript.">
     <meta property="og:tags" content="neobrutalism, static, blog">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aibizsolution.github.io/blog/">
@@ -15,6 +17,7 @@
     <!-- marked.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
     <blog-header></blog-header>
 
@@ -192,8 +195,8 @@ const posts = await response.json();
                 const tags = Array.isArray(post.tags) ? post.tags : [];
                 const tagsMarkup = tags.length > 0
                     ? `<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">${tags
-                          .map((tag) => `<span class="neo-tag">${tag}</span>`)
-                          .join('')}</div>`
+                        .map((tag) => `<span class="neo-tag">${tag}</span>`)
+                        .join('')}</div>`
                     : '';
                 return `<div style="margin-bottom: 1.25rem;">${dateMarkup}${tagsMarkup}</div>`;
             };
@@ -233,13 +236,13 @@ const posts = await response.json();
                             <p>${post.summary}</p>
                             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
                                 ${post.tags
-                                    .map((tag) => {
-                                        const normalized = String(tag || '').toLowerCase();
-                                        const isActive = activeTag && normalized === activeTag.toLowerCase();
-                                        const className = isActive ? 'neo-tag neo-tag--accent' : 'neo-tag';
-                                        return `<button type="button" class="${className}" data-tag="${tag}" style="background: var(--surface-color);">${tag}</button>`;
-                                    })
-                                    .join('')}
+                                .map((tag) => {
+                                    const normalized = String(tag || '').toLowerCase();
+                                    const isActive = activeTag && normalized === activeTag.toLowerCase();
+                                    const className = isActive ? 'neo-tag neo-tag--accent' : 'neo-tag';
+                                    return `<button type="button" class="${className}" data-tag="${tag}" style="background: var(--surface-color);">${tag}</button>`;
+                                })
+                                .join('')}
                             </div>
                         `;
                         listContainer.appendChild(card);
@@ -358,13 +361,13 @@ const posts = await response.json();
             }
             const date = post.date ? String(post.date) : '';
             const dateMarkup = date
-                ? `<time datetime="${date}" style="color: var(--muted-color); font-size: 0.9rem; display: inline-block;">${date}</time>`
+                ? `<time datetime="${date}" style="font-weight: 600; font-size: 0.9rem; display: inline-block;">📅 ${date}</time>`
                 : '';
             const tags = Array.isArray(post.tags) ? post.tags : [];
             const tagsMarkup = tags.length > 0
                 ? `<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">${tags
-                      .map((tag) => `<span class="neo-tag">${tag}</span>`)
-                      .join('')}</div>`
+                    .map((tag) => `<span class="neo-tag">${tag}</span>`)
+                    .join('')}</div>`
                 : '';
             return `<div style="margin-bottom: 1.25rem;">${dateMarkup}${tagsMarkup}</div>`;
         }
@@ -383,7 +386,7 @@ const posts = await response.json();
                 card.className = 'neo-card';
                 const date = post.date ? String(post.date) : '';
                 const dateMarkup = date
-                    ? `<time datetime="${date}" style="color: var(--muted-color); font-size: 0.9rem; margin-bottom: 0.5rem; display: inline-block;">${date}</time>`
+                    ? `<time datetime="${date}" style="font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; display: inline-block;">📅 ${date}</time>`
                     : '';
                 card.innerHTML = `
                     <h3><a href="?post=${post.slug}" style="text-decoration: none; color: inherit;">${post.title}</a></h3>
@@ -391,11 +394,11 @@ const posts = await response.json();
                     <p>${post.summary}</p>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
                         ${post.tags.map(tag => {
-                            const normalized = String(tag || '').toLowerCase();
-                            const isActive = activeTag && normalized === activeTag.toLowerCase();
-                            const className = isActive ? 'neo-tag neo-tag--accent' : 'neo-tag';
-                            return `<button type="button" class="${className}" data-tag="${tag}" style="background: var(--surface-color);">${tag}</button>`;
-                        }).join('')}
+                    const normalized = String(tag || '').toLowerCase();
+                    const isActive = activeTag && normalized === activeTag.toLowerCase();
+                    const className = isActive ? 'neo-tag neo-tag--accent' : 'neo-tag';
+                    return `<button type="button" class="${className}" data-tag="${tag}" style="background: var(--surface-color);">${tag}</button>`;
+                }).join('')}
                     </div>
                 `;
                 listContainer.appendChild(card);
@@ -412,7 +415,7 @@ const posts = await response.json();
                 listView.style.display = 'none';
                 searchSection.style.display = 'none';
                 contentView.style.display = 'block';
-                
+
                 contentContainer.innerHTML = 'Loading...';
                 const postMeta = allPosts.find((post) => post.slug === slug);
                 const result = await loadPost(slug);
@@ -481,4 +484,5 @@ const posts = await response.json();
         });
     </script>
 </body>
+
 </html>
