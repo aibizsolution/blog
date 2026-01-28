@@ -430,10 +430,35 @@ const posts = await response.json();
                 searchSection.style.display = 'none';
                 contentView.style.display = 'block';
 
-                contentContainer.innerHTML = 'Loading...';
+                contentContainer.innerHTML = ''; // Clear previous content
+
+                // 1. Render Meta Immediately (Title, Date, Tags) to reduce layout shift
                 const postMeta = allPosts.find((post) => post.slug === slug);
+                if (postMeta) {
+                    contentContainer.innerHTML = renderPostMeta(postMeta) + '<div id="post-body-placeholder" style="padding: 2rem 0; color: var(--muted-color);">Loading content...</div>';
+                } else {
+                    contentContainer.innerHTML = 'Loading...';
+                }
+
+                // 2. Scroll to top
+                window.scrollTo(0, 0);
+
+                // 3. Add Animation
+                contentView.classList.remove('animate-fade-in');
+                void contentView.offsetWidth; // Trigger reflow
+                contentView.classList.add('animate-fade-in');
+
                 const result = await loadPost(slug);
                 if (result?.html) {
+                    // Replace placeholder with actual content, keeping the meta we already rendered? 
+                    // Actually, loadPost returns the full content including potential headers if we want, 
+                    // but here we just want to replace the placeholder.
+                    // However, our current architecture: loadPost returns markdown content which *might* include title if it was in the markdown.
+                    // But in our current data, title is in JSON.
+                    // Let's replace the whole thing to be safe, but since we rendered simple meta, let's re-render cleanly.
+                    // To avoid flash, we can just replace the body part if possible, but simplest is to just re-set innerHTML.
+                    // Since the meta part is identical, it shouldn't flash much.
+
                     contentContainer.innerHTML = `${renderPostMeta(postMeta)}${result.html}`;
 
                     // Generate TOC
@@ -482,6 +507,11 @@ const posts = await response.json();
                 listView.style.display = 'block';
                 searchSection.style.display = 'block';
                 contentView.style.display = 'none';
+
+                window.scrollTo(0, 0);
+                listView.classList.remove('animate-fade-in');
+                void listView.offsetWidth;
+                listView.classList.add('animate-fade-in');
             }
         }
 
