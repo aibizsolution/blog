@@ -44,9 +44,9 @@
         <section id="post-content-view" style="display: none;">
             <!-- Sticky Control Bar -->
             <div
-                style="position: sticky; top: 100px; z-index: 900; background-color: var(--bg-color); padding: 2rem 0 2rem 0; width: 100%; border-bottom: 3px solid var(--border-color); display: flex; justify-content: center;">
+                style="position: sticky; top: 100px; z-index: 900; background-color: var(--bg-color); padding: 2rem 0 0 0; width: 100%; display: flex; justify-content: center;">
                 <div
-                    style="width: 100%; max-width: var(--content-width); padding: 0 1rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+                    style="width: calc(100% - 4rem); max-width: calc(var(--content-width) - 2rem); padding: 0 1rem 2rem 1rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px dashed var(--border-color);">
                     <button id="back-btn" class="neo-btn">← Back to list</button>
                     <button id="wide-mode-btn" class="neo-btn"
                         style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
@@ -56,16 +56,18 @@
             <div class="post-layout"
                 style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; align-items: start; max-width: var(--content-width); margin: 2rem auto; padding: 0 1rem; width: 100%;">
                 <aside id="toc-sidebar"
-                    style="position: sticky; top: 15.2rem; align-self: start; max-height: calc(100vh - 15rem); overflow-y: auto; display: none;">
-                    <nav class="neo-card" style="padding: 1.5em;">
-                        <h4
-                            style="margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem;">
-                            Contents</h4>
-                        <ul id="toc-list" style="list-style: none; padding: 0; margin: 0;"></ul>
-                    </nav>
+                    style="position: sticky; top: 15.2rem; align-self: start; z-index: 10; display: none;">
+                    <div style="max-height: calc(100vh - 16rem); overflow-y: auto; padding: 6px;">
+                        <nav class="neo-card" style="padding: 1.5rem;">
+                            <h4
+                                style="margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem;">
+                                Contents</h4>
+                            <ul id="toc-list" style="list-style: none; padding: 0; margin: 0;"></ul>
+                        </nav>
+                    </div>
                 </aside>
 
-                <article id="post-content" class="neo-card" style="min-width: 0;">
+                <article id="post-content" class="neo-card" style="min-width: 0; margin-top: 6px;">
                     <!-- Post content will be injected here -->
                 </article>
             </div>
