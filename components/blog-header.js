@@ -16,7 +16,7 @@ class BlogHeader extends HTMLElement {
             <a href="index.html" style="text-decoration: none; color: var(--border-color);">${t.siteTitle}</a>
         </h1>
         <div style="display: flex; gap: 1rem; align-items: center;">
-            <select id="lang-select" class="neo-input" style="width: auto; padding: 0.4rem; font-size: 0.9rem;">
+            <select id="lang-select" class="neo-input" style="width: auto; padding: 0.75rem 1rem; font-size: 0.95rem; line-height: 1; cursor: pointer;">
                 <option value="ko" ${lang === 'ko' ? 'selected' : ''}>🇰🇷 KO</option>
                 <option value="en" ${lang === 'en' ? 'selected' : ''}>🇺🇸 EN</option>
             </select>
