@@ -49,7 +49,13 @@ export async function loadPost(slug) {
       return { html: "", error: { message: "Markdown renderer is unavailable." } };
     }
 
-    return { html: marked.parse(markdown), error: null };
+    let html = marked.parse(markdown, { breaks: true, gfm: true });
+
+    // Custom post-processing to force bold rendering for edge cases (e.g., quotes inside/outside asterisks)
+    // Replaces: **"text"** or "**text**" with <strong>"text"</strong>
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+    return { html, error: null };
   } catch (error) {
     console.error("Network error while loading post markdown", error);
     return {

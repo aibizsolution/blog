@@ -7,13 +7,15 @@
   --border-color: #141414;
   --border-width: 3px;
   --shadow-offset: 4px;
-  --font-main: "Space Grotesk", sans-serif;
+  --font-main: "Space Grotesk", "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
   --text-color: #141414;
   --surface-color: #FFFFFF;
   --muted-color: #5B5B5B;
   --radius: 0px;
   --shadow-color: rgba(20, 20, 20, 1);
+  --heading-color: #334155;
+  /* Subtle Slate Gray for headings */
 }
 
 /* Base */
@@ -33,24 +35,61 @@ body {
   font-family: var(--font-main);
   background: var(--bg-color);
   color: var(--text-color);
-  line-height: 1.5;
+  font-size: 1rem;
+  line-height: 1.7;
   letter-spacing: 0.01em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 0.6em;
-  line-height: 1.1;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1.5em 0 0.8em;
+  /* Added top margin and increased bottom margin */
+  line-height: 1.2;
   letter-spacing: -0.02em;
+  color: var(--heading-color);
 }
 
-h1 { font-size: clamp(2rem, 3.5vw, 3rem); }
-h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
-h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
+h1:first-child,
+h2:first-child {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+}
+
+h2 {
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+}
+
+h3 {
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+}
 
 p {
   margin: 0 0 1em;
+  /* Reduced from 1.5em to tight spacing */
   color: var(--text-color);
 }
+
+ul,
+ol {
+  margin: 0 0 1em 1.2em;
+  /* Reduced bottom margin from 1.5em to 1em */
+  padding-left: 0;
+  /* Reset padding-left */
+  /* Reset padding-left to control indention with margin or padding */
+}
+
+li {
+  margin-bottom: 0.3em;
+  /* Reduced vertical spacing between list items */
+}
+
 
 a {
   color: inherit;
@@ -68,6 +107,20 @@ a:hover {
 :focus-visible {
   outline: 3px solid var(--accent-color);
   outline-offset: 3px;
+}
+
+strong,
+b {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+hr {
+  border: 0;
+  border-top: var(--border-width) solid var(--border-color);
+  width: 20%;
+  margin: 2.5em auto;
+  opacity: 0.8;
 }
 
 /* Neobrutal primitives */
@@ -121,7 +174,7 @@ a:hover {
   padding: 1.25rem;
 }
 
-.neo-card > :last-child {
+.neo-card> :last-child {
   margin-bottom: 0;
 }
 
@@ -200,8 +253,10 @@ a:hover {
   .post-layout {
     grid-template-columns: 1fr !important;
   }
+
   #toc-sidebar {
-    display: none !important; /* Hide TOC on mobile for simplicity, or make it inline */
+    display: none !important;
+    /* Hide TOC on mobile for simplicity, or make it inline */
   }
 }
 
@@ -223,8 +278,15 @@ html {
 
 /* Page Transition Animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
