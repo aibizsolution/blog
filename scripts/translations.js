@@ -11,7 +11,9 @@ export const translations = {
         clickToClear: "(클릭하여 해제)",
         copyright: "© 2026 인크로스 AI비즈솔루션팀. All rights reserved.",
         githubRepo: "GitHub 저장소",
-        postNotFound: "포스트를 찾을 수 없습니다. 목록으로 돌아가주세요."
+        postNotFound: "포스트를 찾을 수 없습니다. 목록으로 돌아가주세요.",
+        wideView: "↔ 넓게 보기",
+        relatedLinks: "🔗 관련 자료"
     },
     en: {
         siteTitle: "AI Biz Solution Team Blog",
@@ -25,7 +27,9 @@ export const translations = {
         clickToClear: "(click again to clear)",
         copyright: "© 2026 Incross AI Biz Solution Team. All rights reserved.",
         githubRepo: "GitHub Repo",
-        postNotFound: "Post not found. Please go back to the list."
+        postNotFound: "Post not found. Please go back to the list.",
+        wideView: "↔ Wide View",
+        relatedLinks: "🔗 Related Links"
     }
 };
 

@@ -293,3 +293,19 @@ html {
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out forwards;
 }
+
+/* Wide Mode Support */
+body.wide-view .container {
+  max-width: 1600px !important;
+}
+
+body.wide-view #post-content-view .post-layout {
+  /* Allow post layout to expand and give more space to TOC */
+  max-width: 100%;
+  grid-template-columns: 300px 1fr !important;
+}
+
+body.wide-view #search-section,
+body.wide-view #post-list {
+  max-width: 1400px !important;
+}

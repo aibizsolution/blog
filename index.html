@@ -38,7 +38,11 @@
 
         <!-- Post Content View -->
         <section id="post-content-view" style="display: none;">
-            <button id="back-btn" class="neo-btn" style="margin-bottom: 1.5rem;">← Back to list</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <button id="back-btn" class="neo-btn">← Back to list</button>
+                <button id="wide-mode-btn" class="neo-btn"
+                    style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
+            </div>
 
             <div class="post-layout"
                 style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; align-items: start;">
@@ -388,6 +392,10 @@ const posts = await response.json();
             // Contents header
             const tocInfo = document.querySelector('#toc-sidebar h4');
             if (tocInfo) tocInfo.textContent = t.contents;
+
+            // Wide View button
+            const wideModeBtn = document.getElementById('wide-mode-btn');
+            if (wideModeBtn) wideModeBtn.textContent = t.wideView;
         }
 
         function createDebounce(fn, delay = 300) {
@@ -520,6 +528,8 @@ const posts = await response.json();
 
                             const li = document.createElement('li');
                             li.style.marginBottom = '0.5rem';
+
+                            // Indent h3 more than h1/h2
                             li.style.paddingLeft = heading.tagName === 'H3' ? '1rem' : '0';
 
                             const a = document.createElement('a');
@@ -537,6 +547,49 @@ const posts = await response.json();
                     } else {
                         tocSidebar.style.display = 'none';
                     }
+
+                    // Render Related Links Section
+                    if (tPost.links && Array.isArray(tPost.links) && tPost.links.length > 0) {
+                        const linksSection = document.createElement('div');
+                        linksSection.style.marginTop = '3rem';
+                        linksSection.style.paddingTop = '1.5rem';
+                        linksSection.style.borderTop = '2px dashed var(--border-color)';
+
+                        const linksHeader = document.createElement('h3');
+                        linksHeader.textContent = t.relatedLinks;
+                        linksHeader.style.marginBottom = '1rem';
+                        linksSection.appendChild(linksHeader);
+
+                        const linksList = document.createElement('ul');
+                        linksList.style.listStyle = 'none';
+                        linksList.style.padding = '0';
+                        linksList.style.margin = '0';
+
+                        tPost.links.forEach(link => {
+                            const linkItem = document.createElement('li');
+                            linkItem.style.marginBottom = '0.75rem';
+
+                            const linkAnchor = document.createElement('a');
+                            linkAnchor.href = link.url;
+                            linkAnchor.target = '_blank';
+                            linkAnchor.rel = 'noopener noreferrer';
+                            linkAnchor.className = 'neo-btn'; // Use button style for links
+                            linkAnchor.style.textDecoration = 'none';
+                            linkAnchor.style.display = 'inline-flex';
+                            linkAnchor.style.width = 'auto';
+                            linkAnchor.style.fontSize = '0.9rem';
+                            // Add icon based on URL or title (simple logic)
+                            // For now just title
+                            linkAnchor.innerHTML = `🔗 ${link.title}`;
+
+                            linkItem.appendChild(linkAnchor);
+                            linksList.appendChild(linkItem);
+                        });
+
+                        linksSection.appendChild(linksList);
+                        contentContainer.appendChild(linksSection);
+                    }
+
                 } else {
                     const message = result?.error?.message || t.postNotFound; // Use translation for "Post not found"
                     contentContainer.innerHTML = `<p>${message}</p>`;
@@ -628,6 +681,29 @@ const posts = await response.json();
             document.getElementById('back-btn').addEventListener('click', () => {
                 window.history.pushState({}, '', window.location.pathname);
                 showPost(null);
+            });
+
+            // Wide Mode Toggle
+            const wideModeBtn = document.getElementById('wide-mode-btn');
+            const body = document.body;
+
+            // Load preference
+            if (localStorage.getItem('wideMode') === 'enabled') {
+                body.classList.add('wide-view');
+                wideModeBtn.style.background = 'var(--accent-color)';
+            }
+
+            wideModeBtn.addEventListener('click', () => {
+                body.classList.toggle('wide-view');
+                const isWide = body.classList.contains('wide-view');
+                localStorage.setItem('wideMode', isWide ? 'enabled' : 'disabled');
+
+                // Active state visual
+                if (isWide) {
+                    wideModeBtn.style.background = 'var(--accent-color)';
+                } else {
+                    wideModeBtn.style.background = 'var(--surface-color)';
+                }
             });
         });
     </script>
