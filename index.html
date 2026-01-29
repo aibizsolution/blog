@@ -578,6 +578,10 @@ const posts = await response.json();
             const listContainer = document.getElementById('post-list');
             const postsResult = await loadPosts();
             allPosts = postsResult?.posts || [];
+
+            // Sort by date descending (newest first)
+            allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
             if (postsResult?.error) {
                 listContainer.innerHTML = `<p>${postsResult.error.message}</p>`;
             } else {
