@@ -588,6 +588,9 @@ const posts = await response.json();
                             linkAnchor.target = '_blank';
                             linkAnchor.rel = 'noopener noreferrer';
                             linkAnchor.className = 'neo-btn'; // Use button style for links
+                            // Override background to Surface (White) to differentiate from selected Header (Pink)
+                            linkAnchor.style.background = 'var(--surface-color)';
+                            linkAnchor.style.color = 'var(--text-color)';
                             linkAnchor.style.textDecoration = 'none';
                             linkAnchor.style.display = 'inline-flex';
                             linkAnchor.style.width = 'auto';

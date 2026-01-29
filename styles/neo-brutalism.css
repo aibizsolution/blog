@@ -62,6 +62,7 @@ h6 {
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--heading-color);
+  scroll-margin-top: 230px;
 }
 
 h1:first-child,
@@ -81,6 +82,38 @@ h2 {
 h3 {
   font-size: clamp(1.15rem, 1.8vw, 1.35rem);
 }
+
+/* Highlight target heading */
+h1:target,
+h2:target,
+h3:target,
+h4:target {
+  background-color: var(--accent-color);
+  color: var(--border-color);
+  border: 3px solid var(--border-color);
+  box-shadow: 6px 6px 0 var(--border-color);
+  padding: 0.2rem 0.5rem;
+  width: fit-content;
+  display: inline-block;
+  animation: target-pop 0.3s ease-out;
+}
+
+@keyframes target-pop {
+  0% {
+    transform: scale(0.98);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Distinct highlight for Related Links header */
+/* logic moved to button styles */
 
 p {
   margin: 0 0 1em;
