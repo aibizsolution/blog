@@ -407,7 +407,10 @@ const posts = await response.json();
 
             // Wide View button
             const wideModeBtn = document.getElementById('wide-mode-btn');
-            if (wideModeBtn) wideModeBtn.textContent = t.wideView;
+            if (wideModeBtn) {
+                const isWide = document.body.classList.contains('wide-view');
+                wideModeBtn.textContent = isWide ? t.standardView : t.wideView;
+            }
         }
 
         function createDebounce(fn, delay = 300) {
@@ -741,6 +744,7 @@ const posts = await response.json();
                 } else {
                     wideModeBtn.style.background = 'var(--surface-color)';
                 }
+                updateUIText();
             });
         });
     </script>

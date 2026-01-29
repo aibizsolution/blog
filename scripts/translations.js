@@ -13,6 +13,7 @@ export const translations = {
         githubRepo: "GitHub 저장소",
         postNotFound: "포스트를 찾을 수 없습니다. 목록으로 돌아가주세요.",
         wideView: "↔ 넓게 보기",
+        standardView: "↔ 기본 보기",
         relatedLinks: "관련 자료"
     },
     en: {
@@ -29,6 +30,7 @@ export const translations = {
         githubRepo: "GitHub Repo",
         postNotFound: "Post not found. Please go back to the list.",
         wideView: "↔ Wide View",
+        standardView: "↔ Standard View",
         relatedLinks: "Related Links"
     }
 };
