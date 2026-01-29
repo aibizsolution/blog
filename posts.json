@@ -9,45 +9,5 @@
       "inova"
     ],
     "summary": "인크로스 사내 챗봇 '아이노바' 소개 및 시연 (프롬프트 최적화, 업무 자동화, 아티팩트 활용)"
-  },
-  {
-    "slug": "getting-started",
-    "title": "Getting Started with This Blog",
-    "date": "2026-01-27",
-    "tags": [
-      "intro",
-      "welcome"
-    ],
-    "summary": "Welcome to a neobrutalism-inspired blog built with raw HTML, CSS, and JavaScript."
-  },
-  {
-    "slug": "neobrutalism-design",
-    "title": "Neobrutalism Design Basics",
-    "date": "2026-01-26",
-    "tags": [
-      "design",
-      "neobrutalism"
-    ],
-    "summary": "Bold borders, hard shadows, and high contrast colors define the neobrutalism aesthetic."
-  },
-  {
-    "slug": "static-sites",
-    "title": "Why Static Sites Still Win",
-    "date": "2026-01-25",
-    "tags": [
-      "architecture",
-      "static"
-    ],
-    "summary": "Static sites are fast, portable, and easy to host without any backend stack."
-  },
-  {
-    "slug": "toc-test",
-    "title": "TOC Integration Test",
-    "date": "2026-01-29",
-    "tags": [
-      "test",
-      "feature"
-    ],
-    "summary": "A test post to verify the Auto Table of Contents hierarchy (H1-H3)."
   }
 ]
