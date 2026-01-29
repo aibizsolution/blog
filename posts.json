@@ -11,12 +11,20 @@
     "summary": "인크로스 사내 챗봇 '아이노바' 소개 및 시연 (프롬프트 최적화, 업무 자동화, 아티팩트 활용)",
     "links": [
       {
-        "title": "발표 자료 (PDF)",
-        "url": "#"
+        "title": "금요스터디 발표 녹화본",
+        "url": "https://drive.google.com/file/d/1L1yqGYuYpTvvp-1I8VpNt3QhQ4iLQibh/view"
       },
       {
-        "title": "발료 영상",
-        "url": "https://chat.incross.com"
+        "title": "인크로스 사내 챗봇 소개 발표 자료",
+        "url": "https://drive.google.com/file/d/1bx861XqKCojh0nihonjnPuwBP8ZbSyfs/view?usp=sharing"
+      },
+      {
+        "title": "시나리오 2 - 대용량 이메일 발송 예시 스프레드 시트",
+        "url": "https://docs.google.com/spreadsheets/d/1VSvDVVF8Q-XEBobv9tUC70LmDiaZm7tTdtNUzSyW224/edit?usp=sharing"
+      },
+      {
+        "title": "시나리오 3 - 캠페인 데이터 예시",
+        "url": "https://docs.google.com/spreadsheets/d/1jqdcHxEALUydMMhbO6UCPxDbGMcc1TN4/edit?usp=sharing&ouid=110524862441459163844&rtpof=true&sd=true"
       }
     ]
   }

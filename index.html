@@ -549,7 +549,7 @@ const posts = await response.json();
                     }
 
                     // Render Related Links Section
-                    if (tPost.links && Array.isArray(tPost.links) && tPost.links.length > 0) {
+                    if (postMeta && postMeta.links && Array.isArray(postMeta.links) && postMeta.links.length > 0) {
                         const linksSection = document.createElement('div');
                         linksSection.style.marginTop = '3rem';
                         linksSection.style.paddingTop = '1.5rem';
@@ -558,6 +558,8 @@ const posts = await response.json();
                         const linksHeader = document.createElement('h3');
                         linksHeader.textContent = t.relatedLinks;
                         linksHeader.style.marginBottom = '1rem';
+                        // ID for TOC navigation
+                        linksHeader.id = 'related-links';
                         linksSection.appendChild(linksHeader);
 
                         const linksList = document.createElement('ul');
@@ -565,7 +567,7 @@ const posts = await response.json();
                         linksList.style.padding = '0';
                         linksList.style.margin = '0';
 
-                        tPost.links.forEach(link => {
+                        postMeta.links.forEach(link => {
                             const linkItem = document.createElement('li');
                             linkItem.style.marginBottom = '0.75rem';
 
@@ -579,8 +581,8 @@ const posts = await response.json();
                             linkAnchor.style.width = 'auto';
                             linkAnchor.style.fontSize = '0.9rem';
                             // Add icon based on URL or title (simple logic)
-                            // For now just title
-                            linkAnchor.innerHTML = `🔗 ${link.title}`;
+                            // For now just title (User requested to remove emoji)
+                            linkAnchor.textContent = link.title;
 
                             linkItem.appendChild(linkAnchor);
                             linksList.appendChild(linkItem);
@@ -588,6 +590,25 @@ const posts = await response.json();
 
                         linksSection.appendChild(linksList);
                         contentContainer.appendChild(linksSection);
+
+                        // Add to TOC sidebar as well
+                        if (tocList) {
+                            const li = document.createElement('li');
+                            li.style.marginBottom = '0.5rem';
+                            li.style.paddingLeft = '0'; // Treat as top-level item
+
+                            const a = document.createElement('a');
+                            a.className = 'toc-link';
+                            a.href = '#related-links';
+                            a.textContent = t.relatedLinks;
+                            a.style.textDecoration = 'none';
+                            a.style.fontSize = '0.9rem';
+                            a.style.display = 'block';
+                            a.style.borderBottom = '1px solid transparent';
+
+                            li.appendChild(a);
+                            tocList.appendChild(li);
+                        }
                     }
 
                 } else {
