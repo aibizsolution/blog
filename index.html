@@ -355,11 +355,40 @@ const posts = await response.json();
         import { initRouter } from './scripts/router.js';
         import { initSearch } from './scripts/search.js';
         import { loadPosts, loadPost } from './scripts/post-loader.js';
+        import { translations, getCurrentLang, setLanguage } from './scripts/translations.js';
 
         window.__BLOG_BOOTSTRAPPED__ = true;
 
         let allPosts = [];
         let activeTag = '';
+
+        // Helper to update static UI text
+        function updateUIText() {
+            const lang = getCurrentLang();
+            const t = translations[lang];
+
+            document.title = t.siteTitle;
+
+            // Search input
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+
+            // Active tag label
+            const activeTagLabel = document.getElementById('active-tag');
+            if (activeTagLabel && activeTag) {
+                activeTagLabel.textContent = `${t.activeTag} ${activeTag} ${t.clickToClear}`;
+            } else if (activeTagLabel) {
+                activeTagLabel.textContent = ''; // Clear if no active tag
+            }
+
+            // Back button
+            const backBtn = document.getElementById('back-btn');
+            if (backBtn) backBtn.textContent = t.backToList;
+
+            // Contents header
+            const tocInfo = document.querySelector('#toc-sidebar h4');
+            if (tocInfo) tocInfo.textContent = t.contents;
+        }
 
         function createDebounce(fn, delay = 300) {
             let timeoutId;
@@ -390,8 +419,11 @@ const posts = await response.json();
             const listContainer = document.getElementById('post-list');
             listContainer.innerHTML = '';
 
+            const lang = getCurrentLang();
+            const t = translations[lang];
+
             if (posts.length === 0) {
-                listContainer.innerHTML = '<p>No posts found.</p>';
+                listContainer.innerHTML = `<p>${t.noPosts}</p>`;
                 return;
             }
 
@@ -425,6 +457,9 @@ const posts = await response.json();
             const searchSection = document.getElementById('search-section');
             const contentContainer = document.getElementById('post-content');
 
+            const lang = getCurrentLang();
+            const t = translations[lang];
+
             if (slug) {
                 listView.style.display = 'none';
                 searchSection.style.display = 'none';
@@ -435,9 +470,9 @@ const posts = await response.json();
                 // 1. Render Meta Immediately (Title, Date, Tags) to reduce layout shift
                 const postMeta = allPosts.find((post) => post.slug === slug);
                 if (postMeta) {
-                    contentContainer.innerHTML = renderPostMeta(postMeta) + '<div id="post-body-placeholder" style="padding: 2rem 0; color: var(--muted-color);">Loading content...</div>';
+                    contentContainer.innerHTML = renderPostMeta(postMeta) + `<div id="post-body-placeholder" style="padding: 2rem 0; color: var(--muted-color);">${t.loading}</div>`;
                 } else {
-                    contentContainer.innerHTML = 'Loading...';
+                    contentContainer.innerHTML = `<p>${t.loading}</p>`;
                 }
 
                 // 2. Scroll to top
@@ -465,6 +500,9 @@ const posts = await response.json();
                     const headings = contentContainer.querySelectorAll('h1, h2, h3');
                     const tocList = document.getElementById('toc-list');
                     const tocSidebar = document.getElementById('toc-sidebar');
+                    // Also update TOC header text
+                    const tocHeader = tocSidebar.querySelector('h4');
+                    if (tocHeader) tocHeader.textContent = t.contents;
 
                     if (headings.length > 0) {
                         tocList.innerHTML = '';
@@ -500,7 +538,7 @@ const posts = await response.json();
                         tocSidebar.style.display = 'none';
                     }
                 } else {
-                    const message = result?.error?.message || 'Post not found. Please go back to the list.';
+                    const message = result?.error?.message || t.postNotFound; // Use translation for "Post not found"
                     contentContainer.innerHTML = `<p>${message}</p>`;
                 }
             } else {
@@ -517,6 +555,26 @@ const posts = await response.json();
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
+            updateUIText();
+
+            // Listen for language changes
+            window.addEventListener('language-changed', () => {
+                updateUIText();
+                // Re-render list if visible to update "No posts" message or other potential text
+                const listView = document.getElementById('post-list-view');
+                if (listView.style.display !== 'none') {
+                    // We need to re-render the list to update "No posts" message if empty,
+                    // but posts content itself might not be translated. 
+                    // However, the "Active tag" part needs update.
+                    // Let's just re-run renderPostList
+                    renderPostList(allPosts); // This handles the active tag visual update too? No, active tag is handled by updateUIText mostly but let's see.
+                }
+
+                // If we are in detail view, we might want to update static text like "Back to list" (handled by updateUIText)
+                // and "Loading" text if it was showing? (unlikely).
+                // TOC header is updated by updateUIText.
+            });
+
             const listContainer = document.getElementById('post-list');
             const postsResult = await loadPosts();
             allPosts = postsResult?.posts || [];
@@ -554,7 +612,10 @@ const posts = await response.json();
                     return;
                 }
                 activeTag = activeTag && activeTag.toLowerCase() === tag.toLowerCase() ? '' : tag;
-                activeTagLabel.textContent = activeTag ? `Active tag: ${activeTag} (click again to clear)` : '';
+
+                // Update active tag label immediately with translation
+                updateUIText(); // This will use the current activeTag state
+
                 const filtered = initSearch(allPosts, searchInput.value, activeTag);
                 renderPostList(filtered);
             });
