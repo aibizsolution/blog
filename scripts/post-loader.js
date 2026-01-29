@@ -1,6 +1,7 @@
 export async function loadPosts() {
   try {
-    const response = await fetch("posts.json");
+    const timestamp = new Date().getTime();
+    const response = await fetch(`posts.json?t=${timestamp}`);
     if (!response.ok) {
       console.error("Failed to load posts.json", response.status, response.statusText);
       return {
@@ -30,7 +31,8 @@ export async function loadPost(slug) {
 
   try {
     const safeSlug = encodeURIComponent(slug);
-    const response = await fetch(`posts/${safeSlug}.md`);
+    const timestamp = new Date().getTime();
+    const response = await fetch(`posts/${safeSlug}.md?t=${timestamp}`);
     if (!response.ok) {
       console.error("Failed to load post markdown", response.status, response.statusText);
       return {
