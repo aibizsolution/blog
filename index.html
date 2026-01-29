@@ -25,33 +25,38 @@
 <body>
     <blog-header></blog-header>
 
-    <main class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+    <main class="container layout-container">
         <!-- Search Section -->
-        <section id="search-section"
-            style="margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <section id="search-section" style="margin: 2rem auto; max-width: 800px; padding: 0 1rem;">
             <input type="text" id="search-input" class="neo-input" placeholder="Search posts by title or tags...">
             <p id="active-tag" style="margin-top: 0.75rem; color: var(--muted-color);"></p>
         </section>
 
         <!-- Post List View -->
         <section id="post-list-view">
-            <div id="post-list" style="display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto;">
+            <div id="post-list" style="display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto; padding: 0 1rem;">
                 <!-- Posts will be injected here -->
             </div>
         </section>
 
         <!-- Post Content View -->
         <section id="post-content-view" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <button id="back-btn" class="neo-btn">← Back to list</button>
-                <button id="wide-mode-btn" class="neo-btn"
-                    style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
+            <!-- Sticky Control Bar -->
+            <div
+                style="position: sticky; top: 80px; z-index: 900; background-color: var(--bg-color); padding: 2rem 0 2rem 0; width: 100%; border-bottom: 3px solid var(--border-color); display: flex; justify-content: center;">
+                <div
+                    style="width: 100%; max-width: var(--content-width); padding: 0 1rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+                    <button id="back-btn" class="neo-btn">← Back to list</button>
+                    <button id="wide-mode-btn" class="neo-btn"
+                        style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
+                </div>
             </div>
 
             <div class="post-layout"
-                style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; align-items: start;">
-                <aside id="toc-sidebar" style="position: sticky; top: 2rem; display: none;">
-                    <nav class="neo-card" style="padding: 1rem;">
+                style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; align-items: start; max-width: var(--content-width); margin: 2rem auto; padding: 0 1rem; width: 100%;">
+                <aside id="toc-sidebar"
+                    style="position: sticky; top: 14rem; align-self: start; max-height: calc(100vh - 15rem); overflow-y: auto; display: none;">
+                    <nav class="neo-card" style="padding: 1.5rem;">
                         <h4
                             style="margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem;">
                             Contents</h4>
@@ -623,6 +628,7 @@ const posts = await response.json();
                 listView.style.display = 'block';
                 searchSection.style.display = 'block';
                 contentView.style.display = 'none';
+                document.body.classList.remove('wide-view'); // Reset wide view when returning to list
 
                 window.scrollTo(0, 0);
                 listView.classList.remove('animate-fade-in');

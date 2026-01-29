@@ -11,8 +11,8 @@ class BlogFooter extends HTMLElement {
     const t = translations[lang];
 
     this.innerHTML = `
-      <footer class="neo-card" style="margin-top: 3rem; text-align: center; background-color: var(--border-color); color: var(--bg-color);">
-        <p style="color: inherit;">${t.copyright}</p>
+      <footer class="neo-card" style="width: calc(100% - 4rem); max-width: calc(var(--content-width) - 2rem); margin: 4rem auto 2rem; text-align: center; background-color: var(--accent-color); border: var(--border-width) solid var(--border-color); box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color); color: var(--text-color);">
+        <p style="color: inherit; font-weight: 700;">${t.copyright}</p>
       </footer>
     `;
   }
