@@ -11,8 +11,8 @@ class BlogHeader extends HTMLElement {
     const t = translations[lang];
 
     this.innerHTML = `
-      <header style="height: 80px; position: sticky; top: 0; z-index: 1000; width: 100%; background-color: var(--container-bg); border-bottom: var(--border-width) solid var(--border-color); box-sizing: border-box;">
-        <div style="max-width: var(--content-width); margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+      <header style="height: 100px; position: sticky; top: 0; z-index: 1000; width: 100%; background-color: var(--bg-color); padding-top: 1rem; box-sizing: border-box;">
+        <div class="neo-card" style="width: calc(100% - 4rem); max-width: calc(var(--content-width) - 2rem); margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; background-color: var(--container-bg); border: var(--border-width) solid var(--border-color); box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);">
             <h1 style="margin: 0; font-size: 1.5rem;">
                 <a href="index.html" style="text-decoration: none; color: var(--text-color); font-weight: 900;">${t.siteTitle}</a>
             </h1>
