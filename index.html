@@ -27,7 +27,7 @@
 
     <main class="container layout-container">
         <!-- Search Section -->
-        <section id="search-section" style="margin: 2rem auto; max-width: 800px; padding: 0 1rem;">
+        <section id="search-section" style="margin: 2rem auto; max-width: calc(var(--content-width) - 2rem); padding: 0 1rem;">
             <input type="text" id="search-input" class="neo-input" placeholder="Search posts by title or tags...">
             <p id="active-tag" style="margin-top: 0.75rem; color: var(--muted-color);"></p>
         </section>
@@ -35,7 +35,7 @@
         <!-- Post List View -->
         <section id="post-list-view">
             <div id="post-list"
-                style="display: grid; gap: 1.5rem; max-width: 800px; margin: 0 auto 2rem; padding: 0 1rem;">
+                style="display: grid; gap: 1.5rem; max-width: calc(var(--content-width) - 2rem); margin: 0 auto 2rem; padding: 0 1rem;">
                 <!-- Posts will be injected here -->
             </div>
         </section>
