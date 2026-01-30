@@ -278,6 +278,42 @@ hr {
     width: 100%;
     padding: 0.85rem 1rem;
   }
+
+  #search-section,
+  #post-list {
+    width: calc(100% - 2rem) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  #post-content-view .post-layout {
+    width: calc(100% - 2rem) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  blog-header header .neo-card,
+  blog-footer footer.neo-card {
+    width: calc(100% - 2rem) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #post-content-view > div > div {
+    width: calc(100% - 2rem) !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #wide-mode-btn {
+    display: none !important;
+  }
 }
 
 @media (max-width: 420px) {
