@@ -311,7 +311,9 @@ hr {
     margin-right: auto !important;
   }
 
-  #wide-mode-btn {
+  #wide-mode-btn,
+  #copy-md-btn,
+  #pdf-btn {
     display: none !important;
   }
 }
