@@ -8,19 +8,6 @@
       "Notebook LM",
       "금요스터디"
     ],
-    "summary": "오늘 점심에 먹은 맛있는 음식에 대한 기록입니다."
-  },
-  {
-    "slug": "today_lunch_20260129",
-    "title": "오늘의 점심 일상",
-    "date": "2026-01-29",
-    "tags": [
-      "daily",
-      "lunch",
-      "life"
-    ],
-    "summary": "오늘 점심에 먹은 맛있는 음식에 대한 기록입니다."
-  },
   {
     "slug": "금요스터디_20251219",
     "title": "아이노바 소개 및 활용 시연",
@@ -53,16 +40,5 @@
         "url": "https://drive.google.com/file/d/10GoLVJjRUvCUSX7jVPGS74_22EsA5JVw/view?usp=sharing"
       }
     ]
-  },
-  {
-    "slug": "LaTeX 수학 기호 가이드",
-    "title": "LaTeX 수학 기호 가이드",
-    "date": "2026-01-29",
-    "tags": [
-      "LaTex 기호",
-      "테스트 1",
-      "테스트 2"
-    ],
-    "summary": "LaTex 연산기호 소개"
   }
 ]
