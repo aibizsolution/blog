@@ -57,7 +57,7 @@ export async function loadPost(slug) {
     // Replaces: **"text"** or "**text**" with <strong>"text"</strong>
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-    return { html, error: null };
+    return { html, markdown, error: null };
   } catch (error) {
     console.error("Network error while loading post markdown", error);
     return {

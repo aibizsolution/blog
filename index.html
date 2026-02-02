@@ -27,7 +27,8 @@
 
     <main class="container layout-container">
         <!-- Search Section -->
-        <section id="search-section" style="margin: 2rem auto; max-width: calc(var(--content-width) - 2rem); padding: 0 1rem;">
+        <section id="search-section"
+            style="margin: 2rem auto; max-width: calc(var(--content-width) - 2rem); padding: 0 1rem;">
             <input type="text" id="search-input" class="neo-input" placeholder="Search posts by title or tags...">
             <p id="active-tag" style="margin-top: 0.75rem; color: var(--muted-color);"></p>
         </section>
@@ -48,8 +49,13 @@
                 <div
                     style="width: calc(100% - 4rem); max-width: calc(var(--content-width) - 2rem); padding: 0 1rem 2rem 1rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px dashed var(--border-color);">
                     <button id="back-btn" class="neo-btn">← Back to list</button>
-                    <button id="wide-mode-btn" class="neo-btn"
-                        style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button id="copy-md-btn" class="neo-btn"
+                            style="background: var(--surface-color); color: var(--text-color);">📋 Copy MD</button>
+                        <button id="wide-mode-btn" class="neo-btn"
+                            style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
+                    </div>
+
                 </div>
             </div>
 
@@ -377,6 +383,7 @@ const posts = await response.json();
 
         let allPosts = [];
         let activeTag = '';
+        let currentMarkdown = '';
 
         // Helper to update static UI text
         function updateUIText() {
@@ -410,6 +417,13 @@ const posts = await response.json();
             if (wideModeBtn) {
                 const isWide = document.body.classList.contains('wide-view');
                 wideModeBtn.textContent = isWide ? t.standardView : t.wideView;
+            }
+
+            // Copy MD button
+            const copyMdBtn = document.getElementById('copy-md-btn');
+            if (copyMdBtn) {
+                const isCopied = copyMdBtn.getAttribute('data-copied') === 'true';
+                copyMdBtn.textContent = isCopied ? t.copied : t.copyMarkdown;
             }
         }
 
@@ -508,6 +522,7 @@ const posts = await response.json();
 
                 const result = await loadPost(slug);
                 if (result?.html) {
+                    currentMarkdown = result.markdown || '';
                     // Replace placeholder with actual content, keeping the meta we already rendered? 
                     // Actually, loadPost returns the full content including potential headers if we want, 
                     // but here we just want to replace the placeholder.
@@ -722,6 +737,30 @@ const posts = await response.json();
                 window.history.pushState({}, '', window.location.pathname);
                 showPost(null);
             });
+
+            // Copy MD Button
+            const copyMdBtn = document.getElementById('copy-md-btn');
+            if (copyMdBtn) {
+                copyMdBtn.addEventListener('click', async () => {
+                    if (!currentMarkdown) return;
+                    try {
+                        await navigator.clipboard.writeText(currentMarkdown);
+
+                        // Visual feedback
+                        copyMdBtn.setAttribute('data-copied', 'true');
+                        updateUIText();
+
+                        // Revert after 2 seconds
+                        setTimeout(() => {
+                            copyMdBtn.setAttribute('data-copied', 'false');
+                            updateUIText();
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy markdown:', err);
+                        alert('Failed to copy to clipboard');
+                    }
+                });
+            }
 
             // Wide Mode Toggle
             const wideModeBtn = document.getElementById('wide-mode-btn');

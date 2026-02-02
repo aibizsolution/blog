@@ -14,7 +14,9 @@ export const translations = {
         postNotFound: "포스트를 찾을 수 없습니다. 목록으로 돌아가주세요.",
         wideView: "↔ 넓게 보기",
         standardView: "↔ 기본 보기",
-        relatedLinks: "관련 자료"
+        relatedLinks: "관련 자료",
+        copyMarkdown: "📋 MD 복사",
+        copied: "✅ 복사됨!"
     },
     en: {
         siteTitle: "AI Biz Solution Team Blog",
@@ -31,7 +33,9 @@ export const translations = {
         postNotFound: "Post not found. Please go back to the list.",
         wideView: "↔ Wide View",
         standardView: "↔ Standard View",
-        relatedLinks: "Related Links"
+        relatedLinks: "Related Links",
+        copyMarkdown: "📋 Copy MD",
+        copied: "✅ Copied!"
     }
 };
 
