@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(source ~/.bashrc)",
+      "Bash(echo:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp:*)",
+      "Bash(npm search:*)",
+      "WebSearch",
+      "Bash(claude:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)"
+    ]
+  }
+}

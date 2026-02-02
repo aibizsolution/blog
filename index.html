@@ -52,6 +52,8 @@
                     <div style="display: flex; gap: 0.75rem;">
                         <button id="copy-md-btn" class="neo-btn"
                             style="background: var(--surface-color); color: var(--text-color);">📋 Copy MD</button>
+                        <button id="pdf-btn" class="neo-btn"
+                            style="background: var(--surface-color); color: var(--text-color);">📄 PDF</button>
                         <button id="wide-mode-btn" class="neo-btn"
                             style="background: var(--surface-color); color: var(--text-color);">↔ Wide View</button>
                     </div>
@@ -425,6 +427,12 @@ const posts = await response.json();
                 const isCopied = copyMdBtn.getAttribute('data-copied') === 'true';
                 copyMdBtn.textContent = isCopied ? t.copied : t.copyMarkdown;
             }
+
+            // PDF button
+            const pdfBtn = document.getElementById('pdf-btn');
+            if (pdfBtn) {
+                pdfBtn.textContent = t.savePdf;
+            }
         }
 
         function createDebounce(fn, delay = 300) {
@@ -759,6 +767,14 @@ const posts = await response.json();
                         console.error('Failed to copy markdown:', err);
                         alert('Failed to copy to clipboard');
                     }
+                });
+            }
+
+            // PDF Button
+            const pdfBtn = document.getElementById('pdf-btn');
+            if (pdfBtn) {
+                pdfBtn.addEventListener('click', () => {
+                    window.print();
                 });
             }
 

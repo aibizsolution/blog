@@ -16,7 +16,8 @@ export const translations = {
         standardView: "↔ 기본 보기",
         relatedLinks: "관련 자료",
         copyMarkdown: "📋 MD 복사",
-        copied: "✅ 복사됨!"
+        copied: "✅ 복사됨!",
+        savePdf: "📄 PDF 저장"
     },
     en: {
         siteTitle: "AI Biz Solution Team Blog",
@@ -35,7 +36,8 @@ export const translations = {
         standardView: "↔ Standard View",
         relatedLinks: "Related Links",
         copyMarkdown: "📋 Copy MD",
-        copied: "✅ Copied!"
+        copied: "✅ Copied!",
+        savePdf: "📄 Save PDF"
     }
 };
 

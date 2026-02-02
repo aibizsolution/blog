@@ -456,3 +456,71 @@ body.wide-view #post-list {
   max-width: 1000px !important;
   /* Slightly wider but not full width for readability */
 }
+
+
+/* Print / PDF Styles */
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Hide header, footer, and controls specifically to be safe */
+  blog-header,
+  blog-footer,
+  #search-section,
+  #post-list-view,
+  #toc-sidebar,
+  .neo-btn,
+  #back-btn,
+  #post-content-view > div:first-child { /* Sticky control bar */
+    display: none !important;
+  }
+
+  /* Show only the post content */
+  #post-content-view,
+  #post-content-view .post-layout,
+  #post-content,
+  #post-content * {
+    visibility: visible;
+  }
+
+  /* Reset layout for print */
+  #post-content-view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block !important;
+  }
+
+  .post-layout {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  #post-content {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure text is black for printing */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  a {
+    text-decoration: none !important;
+    color: black !important;
+  }
+}
