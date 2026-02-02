@@ -303,7 +303,7 @@ hr {
     margin-right: auto !important;
   }
 
-  #post-content-view > div > div {
+  #post-content-view>div>div {
     width: calc(100% - 2rem) !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
@@ -458,14 +458,29 @@ body.wide-view #post-list {
 }
 
 
-/* Print / PDF Styles */
+/* Print / PDF Styles - Professional Report Theme */
 @media print {
+  @page {
+    size: A4;
+    margin: 2cm;
+  }
+
   /* Hide everything by default */
   body * {
     visibility: hidden;
   }
 
-  /* Hide header, footer, and controls specifically to be safe */
+  /* Expose specific print elements */
+  #post-content-view,
+  #print-header,
+  #print-header *,
+  #post-content-view .post-layout,
+  #post-content,
+  #post-content * {
+    visibility: visible;
+  }
+
+  /* Hide UI elements explicitly */
   blog-header,
   blog-footer,
   #search-section,
@@ -473,19 +488,20 @@ body.wide-view #post-list {
   #toc-sidebar,
   .neo-btn,
   #back-btn,
-  #post-content-view > div:first-child { /* Sticky control bar */
+  #post-content-view>div:first-child {
+    /* Sticky control bar */
     display: none !important;
   }
 
-  /* Show only the post content */
-  #post-content-view,
-  #post-content-view .post-layout,
-  #post-content,
-  #post-content * {
-    visibility: visible;
+  /* Layout Reset */
+  body {
+    background: white !important;
+    color: #000 !important;
+    font-size: 11pt;
+    /* Standard doc size */
+    line-height: 1.6;
   }
 
-  /* Reset layout for print */
   #post-content-view {
     position: absolute;
     left: 0;
@@ -496,6 +512,16 @@ body.wide-view #post-list {
     display: block !important;
   }
 
+  /* Print Header Styles */
+  #print-header {
+    display: block !important;
+    width: 100%;
+    border-bottom: 2px solid #000 !important;
+    margin-bottom: 30px !important;
+    padding-bottom: 10px !important;
+  }
+
+  /* Post Layout Reset */
   .post-layout {
     display: block !important;
     width: 100% !important;
@@ -505,6 +531,7 @@ body.wide-view #post-list {
     grid-template-columns: 1fr !important;
   }
 
+  /* Content Styling */
   #post-content {
     border: none !important;
     box-shadow: none !important;
@@ -513,14 +540,59 @@ body.wide-view #post-list {
     margin: 0 !important;
   }
 
-  /* Ensure text is black for printing */
-  body {
-    background: white !important;
-    color: black !important;
+  /* Typography Enhancements */
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 3px double #000;
+    /* Distinct Title Look */
+    text-align: left;
   }
-  
+
+  h2 {
+    font-size: 16pt;
+    margin-top: 1.5em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+
+  h3 {
+    font-size: 13pt;
+    margin-top: 1.2em;
+    color: #333;
+  }
+
+  p,
+  li {
+    text-align: justify;
+    /* Report-like justification */
+  }
+
+  /* Code Blocks */
+  pre,
+  code {
+    border: 1px solid #ddd;
+    background: #f9f9f9 !important;
+    /* Light gray for contrast */
+    color: #333 !important;
+    overflow-x: hidden;
+    /* Avoid scrollbars in print */
+    white-space: pre-wrap;
+    /* Wrap long formatting */
+  }
+
+  /* Links */
   a {
     text-decoration: none !important;
-    color: black !important;
+    color: #000 !important;
+    font-weight: 600;
   }
+
+  /* Optional: Show URL for external links if needed, but keeping it clean for now */
+  /* a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  } */
 }
