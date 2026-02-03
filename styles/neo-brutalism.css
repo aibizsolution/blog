@@ -1,6 +1,7 @@
 /* Space Grotesk (Google Fonts) & Pretendard (Korean) */
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
 
 :root {
   /* Vibrant Pastel Palette */
@@ -431,6 +432,238 @@ td {
 }
 
 /* Wide Mode Support */
+/* Code Block Styles - Refined Card Look (Flat) */
+pre {
+  background: #f8f9fa;
+  border: 1px solid #d1d5db;
+  /* Clean, thin gray border */
+  border-radius: 6px;
+  /* Slightly tighter radius */
+  padding: 3rem 1.75rem 1.75rem 1.75rem;
+  /* More padding */
+  overflow-x: hidden;
+  position: relative;
+  margin: 2rem 0;
+  box-shadow: none;
+  /* Removed shadow/gradient effect */
+  white-space: pre-wrap;
+  /* Wrap text */
+  word-break: break-word;
+
+  /* Typography for "Developer" feel */
+  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  /* Slightly smaller text */
+  line-height: 1.5;
+  /* Denser lines */
+  letter-spacing: -0.015em;
+  /* Tighter letter spacing */
+  color: #334155;
+}
+
+pre hr {
+  border: 0;
+  border-top: 1px solid #cbd5e1;
+  margin: 1.5em 0;
+  width: 100%;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: inherit;
+}
+
+/* Inline code style */
+p code,
+li code,
+td code,
+th code {
+  background: rgba(224, 244, 182, 0.6);
+  border: 1px solid var(--border-color);
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--heading-color);
+  font-size: 0.85em;
+}
+
+/* Pre block code override */
+pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+  font-weight: normal;
+}
+
+/* Copy Button - Icon Style */
+.copy-code-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  color: #64748b;
+  font-size: 1.2rem;
+  padding: 0;
+}
+
+.copy-code-btn:hover {
+  background: #fff;
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.copy-code-btn:active {
+  transform: translateY(0);
+  background: #f1f5f9;
+}
+
+/* Code Language Label (Optional) */
+pre::before {
+  display: none;
+}
+
+/* Toggle/Accordion Styles (details & summary) */
+details {
+  border: 1px solid #d1d5db;
+  /* Thin gray border */
+  border-radius: 8px;
+  background: white;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  /* Clip content for rounded corners */
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  /* Very subtle shadow */
+}
+
+summary {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  /* Remove default triangle */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Space between title and arrow */
+  background: white;
+  color: #334155;
+  transition: background 0.2s, color 0.2s;
+  font-family: var(--font-main);
+  font-size: 1rem;
+}
+
+/* Chrome/Safari default marker removal */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Hover effect for summary */
+summary:hover {
+  background: #f8f9fa;
+  color: var(--text-color);
+}
+
+/* Custom Chevron Icon (using CSS border) */
+summary::after {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid #94a3b8;
+  border-bottom: 2px solid #94a3b8;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+  margin-left: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+/* Open State Styling */
+/* When open, the whole box gets the light gray background */
+details[open] {
+  background: #f8fafc;
+}
+
+details[open] summary {
+  border-bottom: 1px solid #e2e8f0;
+  /* Divider line */
+  background: #fff;
+  /* Header stays white */
+  color: var(--heading-color);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin-bottom: 0;
+  /* Ensure no gap between summary and content */
+}
+
+/* Rotate Chevron when open */
+details[open] summary::after {
+  transform: rotate(225deg);
+  /* Flip up */
+  border-color: var(--accent-color);
+  /* Highlight color */
+}
+
+/* Content Area inside details */
+/* Apply margins to all direct children except summary to create "padding" effect */
+details>*:not(summary) {
+  margin-left: 1.5rem;
+  /* Reduced to match vertical spacing */
+  margin-right: 1.5rem;
+  /* Reduced to match vertical spacing */
+  background: transparent;
+  /* Inherit gray from details */
+}
+
+/* Add vertical spacing for the content flow */
+details>summary+* {
+  margin-top: 1.5rem;
+  /* Space between header and first item */
+}
+
+details>*:last-child {
+  margin-bottom: 1.5rem;
+  /* Space at the bottom */
+}
+
+/* Nested Pre/Code Blocks inside Details */
+/* Make them pop out against the light gray background */
+details pre {
+  background: #ffffff !important;
+  /* White card look */
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  width: auto;
+  /* Respect margins */
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body.wide-view {
   --content-width: var(--wide-content-width);
 }

@@ -661,6 +661,38 @@ const posts = await response.json();
                         }
                     }
 
+                    // Add Copy Buttons to Code Blocks
+                    const codeBlocks = contentContainer.querySelectorAll('pre');
+                    codeBlocks.forEach((pre) => {
+                        // Check if button already exists
+                        if (pre.querySelector('.copy-code-btn')) return;
+
+                        const btn = document.createElement('button');
+                        btn.className = 'copy-code-btn';
+                        btn.innerHTML = '📋'; // Clipboard icon
+                        btn.title = t.copy || 'Copy'; // Tooltip
+                        btn.type = 'button';
+
+                        btn.addEventListener('click', async () => {
+                            const code = pre.querySelector('code');
+                            const text = code ? code.innerText : pre.innerText;
+
+                            try {
+                                await navigator.clipboard.writeText(text);
+                                const originalHtml = btn.innerHTML;
+                                btn.innerHTML = '✅'; // Check icon
+                                setTimeout(() => {
+                                    btn.innerHTML = originalHtml;
+                                }, 2000);
+                            } catch (err) {
+                                console.error('Failed to copy', err);
+                                btn.innerHTML = '❌';
+                            }
+                        });
+
+                        pre.appendChild(btn);
+                    });
+
                 } else {
                     const message = result?.error?.message || t.postNotFound; // Use translation for "Post not found"
                     contentContainer.innerHTML = `<p>${message}</p>`;

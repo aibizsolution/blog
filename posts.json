@@ -1,5 +1,5 @@
 [
-   {
+  {
     "slug": "Notebook LM",
     "title": "Notebook LM 이해하기",
     "date": "2026-02-06",
@@ -8,8 +8,14 @@
       "Notebook LM",
       "금요스터디"
     ],
-  "summary": "Google Notebook LM 소개 및 활용 시연"
-   },
+    "summary": "Google Notebook LM 소개 및 활용 시연",
+    "links": [
+      {
+        "title": "구글 브라우저 확장프로그램: Grabbit",
+        "url": "https://chromewebstore.google.com/detail/grabbit/madmdgpjgagdmmmiddpiggdnpgjglcdk?hl=ko&utm_source=ext_sidebar"
+      }
+    ]
+  },
   {
     "slug": "금요스터디_20251219",
     "title": "아이노바 소개 및 활용 시연",
