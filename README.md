@@ -9,15 +9,9 @@
 - **클라이언트 사이드 렌더링**: `marked.js`(CDN)를 사용하여 브라우저에서 마크다운 변환
 - **GitHub Pages 최적화**: 별도의 빌드 과정 없는 순수 정적 구조
 
-## 로컬에서 미리보기 (Local Preview)
+## 개발/운영 가이드
 
-`fetch()` API를 사용하므로, CORS 문제를 피하기 위해 로컬 서버가 필요합니다:
-
-```bash
-npx http-server .
-```
-
-터미널에 표시되는 URL(보통 `http://127.0.0.1:8080`)을 브라우저에서 열어주세요.
+개발/운영 관련 내용은 `AGENTS.md`에 분리되어 있습니다.
 
 ## 새 포스트 작성 방법 (How to Add a Post)
 
@@ -92,15 +86,6 @@ npx http-server .
 
 - `slug`에 공백/한글이 포함된 경우 브라우저가 자동 인코딩하지만, 직접 쓰려면 인코딩된 값을 사용합니다.
 
-## GitHub Pages 배포
+## 배포
 
-저장소: `https://github.com/aibizsolution/blog`
-
-1. GitHub 저장소에 코드를 푸시합니다.
-2. 저장소의 **Settings** > **Pages** 메뉴로 이동합니다.
-3. **Source**를 `main` 브랜치, 폴더를 `/ (root)`로 설정하고 저장합니다.
-4. 배포가 완료될 때까지 잠시 기다립니다.
-
-라이브 데모:
-
-`https://aibizsolution.github.io/blog/`
+운영/배포 절차는 `AGENTS.md`를 참고하세요.

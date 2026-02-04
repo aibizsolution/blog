@@ -813,8 +813,38 @@ const posts = await response.json();
 
             // PDF Button
             const pdfBtn = document.getElementById('pdf-btn');
+            let printDetailsState = null;
+
+            const expandDetailsForPrint = () => {
+                const details = document.querySelectorAll('#post-content details');
+                if (!details.length) {
+                    return;
+                }
+                printDetailsState = Array.from(details, (item) => item.open);
+                details.forEach((item) => {
+                    item.open = true;
+                });
+            };
+
+            const restoreDetailsAfterPrint = () => {
+                if (!printDetailsState) {
+                    return;
+                }
+                const details = document.querySelectorAll('#post-content details');
+                details.forEach((item, index) => {
+                    if (printDetailsState[index] === false) {
+                        item.open = false;
+                    }
+                });
+                printDetailsState = null;
+            };
+
+            window.addEventListener('beforeprint', expandDetailsForPrint);
+            window.addEventListener('afterprint', restoreDetailsAfterPrint);
+
             if (pdfBtn) {
                 pdfBtn.addEventListener('click', () => {
+                    expandDetailsForPrint();
                     window.print();
                 });
             }
