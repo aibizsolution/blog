@@ -22,6 +22,8 @@ npx http-server .
 ## 새 포스트 작성 방법 (How to Add a Post)
 
 1.  **마크다운 파일 생성**: `posts/` 폴더에 새로운 `.md` 파일을 만듭니다 (예: `posts/my-story.md`).
+    - **파일명 규칙**: 파일명은 영문 소문자, 숫자, 하이픈(`-`)을 권장합니다.
+    - **slug 규칙**: 파일명에서 `.md`를 뺀 값이 `slug`입니다. 예) `my-story.md` → `slug: "my-story"`
 2.  **인덱스 업데이트**: `posts.json` 파일을 열고 새 포스트 정보를 추가합니다:
 
     ```json
@@ -33,6 +35,62 @@ npx http-server .
       "summary": "새 포스트의 요약 내용입니다."
     }
     ```
+    - **date 포맷**: `YYYY-MM-DD` 형식으로 작성합니다. (예: `2026-01-29`)
+    - **tags**: 검색/필터에 사용됩니다. 빈 배열도 가능합니다.
+    - **summary**: 목록/검색 결과에서 미리보기로 노출됩니다.
+    - **정렬**: 보통 최신 글이 위에 오도록 `posts.json`에서 최신 글을 앞쪽에 배치합니다.
+3.  **링크 확인**: 브라우저에서 `http://localhost:PORT/`로 접속해 목록과 상세 페이지가 잘 열리는지 확인합니다.
+    - 목록에서 제목 클릭 시 해당 마크다운이 렌더링됩니다.
+    - 404가 뜨면 `slug`와 파일명이 불일치할 가능성이 큽니다.
+
+## 링크 작성 가이드 (Links)
+
+이 블로그는 **마크다운 본문 링크**와 **posts.json의 Related Links** 두 가지를 지원합니다.
+
+### 1) 마크다운 본문 링크
+
+포스트 마크다운(`posts/*.md`) 안에서 일반적인 마크다운 링크를 그대로 사용할 수 있습니다.
+
+```md
+[외부 사이트](https://example.com)
+[같은 문서의 섹션](#section-title)
+```
+
+- **섹션 링크**: 헤딩 제목이 자동으로 ID로 변환됩니다. 예를 들어 `## My Section` → `#my-section`
+- **이미지**: 아래처럼 가능합니다.
+
+```md
+![대체 텍스트](./images/example.png)
+```
+
+### 2) Related Links (posts.json의 links 배열)
+
+상세 페이지 하단에 **Related Links** 영역이 표시됩니다.  
+각 포스트 객체에 `links` 배열을 추가하면 됩니다.
+
+```json
+{
+  "slug": "my-story",
+  "title": "나의 새로운 이야기",
+  "date": "2026-01-29",
+  "tags": ["life", "update"],
+  "summary": "새 포스트의 요약 내용입니다.",
+  "links": [
+    { "title": "발표 자료", "url": "https://drive.google.com/..." },
+    { "title": "참고 링크", "url": "https://example.com" }
+  ]
+}
+```
+
+### 3) 포스트 간 내부 링크
+
+포스트 내부에서 **다른 포스트로 이동**하려면 `?post=slug` 형식을 사용합니다.
+
+```md
+[다른 글로 이동](?post=my-story)
+```
+
+- `slug`에 공백/한글이 포함된 경우 브라우저가 자동 인코딩하지만, 직접 쓰려면 인코딩된 값을 사용합니다.
 
 ## GitHub Pages 배포
 
