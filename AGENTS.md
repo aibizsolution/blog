@@ -23,6 +23,7 @@ python3 -m http.server 4173 --directory .
 
 - 포스트 마크다운: `posts/*.md`
 - 인덱스: `posts.json`
+- 공용 자료실: `PDS/` (Public Data Storage)
 
 `posts.json` 필드 요약:
 - `slug`: 파일명에서 `.md`를 뺀 값과 동일
