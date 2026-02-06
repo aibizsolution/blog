@@ -14,7 +14,11 @@
 `fetch()` 사용으로 인해 로컬 서버가 필요합니다.
 
 ```bash
-python3 -m http.server 4173 --directory .
+# Node.js (권장 - 별도 설치 없이 바로 실행 가능)
+npx http-server -p 4173
+
+# Python (설치된 경우)
+# python -m http.server 4173
 ```
 
 브라우저에서 `http://localhost:4173/` 접속.

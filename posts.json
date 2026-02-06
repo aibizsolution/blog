@@ -1,5 +1,24 @@
 [
   {
+    "slug": "iNova_OTP_Guide",
+    "title": "[가이드] i-Nova 외부 접속을 위한 2단계(OTP) 인증 설정 (앱 링크 포함)",
+    "date": "2026-01-22",
+    "tags": [
+      "i-Nova",
+      "OTP",
+      "보안",
+      "가이드",
+      "인크로스"
+    ],
+    "summary": "외부 IP 접속을 위한 i-Nova 2단계(OTP) 인증 설정 가이드 (앱 다운로드 링크 포함)",
+    "links": [
+      {
+        "title": "iNova 외부 접속 인증 설정 가이드 (PDF)",
+        "url": "https://aibizsolution.github.io/blog/PDS/i-Nova_%EC%99%B8%EB%B6%80IP%EC%9D%B8%EC%A6%9D_%EA%B0%80%EC%9D%B4%EB%93%9C.pdf"
+      }
+    ]
+  },
+  {
     "slug": "Notebook LM",
     "title": "Notebook LM 이해하기",
     "date": "2026-02-06",
