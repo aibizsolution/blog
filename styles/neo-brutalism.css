@@ -344,16 +344,103 @@ hr {
   }
 }
 
-/* TOC Sidebar Links */
+/* TOC Sidebar */
+.toc-scroll {
+  max-height: calc(100vh - 16rem);
+  overflow-y: auto;
+  padding: 4px 10px 4px 4px;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--accent-color) transparent;
+  scrollbar-width: thin;
+}
+
+.toc-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.toc-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0;
+}
+
+.toc-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--container-bg);
+}
+
+.toc-scroll::-webkit-scrollbar-button,
+.toc-scroll::-webkit-scrollbar-button:single-button,
+.toc-scroll::-webkit-scrollbar-button:start:decrement,
+.toc-scroll::-webkit-scrollbar-button:end:increment {
+  background: transparent;
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+.toc-card {
+  padding: 1rem !important;
+}
+
+.toc-title {
+  margin: 0 0 0.75rem !important;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--border-color);
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.toc-item {
+  margin: 0;
+}
+
+.toc-item+.toc-item {
+  margin-top: 0.15rem;
+}
+
+.toc-item--h1+.toc-item--h2,
+.toc-item--h2+.toc-item--h2 {
+  margin-top: 0.45rem;
+}
+
+.toc-item--h3 {
+  padding-left: 0.55rem !important;
+}
+
 .toc-link {
-  transition: color 140ms ease;
+  display: block;
+  padding: 0.32rem 0.35rem;
+  border-left: 3px solid transparent;
+  color: var(--text-color);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  transition: color 140ms ease, background 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.toc-item--h1 .toc-link {
+  color: #7a4b52;
+}
+
+.toc-item--h3 .toc-link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted-color);
 }
 
 .toc-link:hover {
-  background: transparent !important;
+  background: var(--container-bg) !important;
   box-shadow: none !important;
-  color: var(--accent-color) !important;
-  transform: translateX(4px);
+  border-left-color: var(--accent-color);
+  color: var(--border-color) !important;
+  transform: translateX(3px);
 }
 
 html {

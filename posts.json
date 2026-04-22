@@ -1,5 +1,24 @@
 [
   {
+    "slug": "inova-ai-literacy-context-prompt",
+    "title": "i-Nova, 제대로 이해하기: 모델 작동 원리부터 실전 Tip 5가지까지",
+    "date": "2026-04-24",
+    "tags": [
+      "i-Nova",
+      "금요스터디",
+      "AI 리터러시",
+      "프롬프트",
+      "업무 활용"
+    ],
+    "summary": "2026년 4월 24일 금요스터디 발표 흐름에 맞춰 AI 리터러시, i-Nova 작동 원리, 답변 품질 저하 원인, 실전 Tip 5가지를 정리합니다.",
+    "links": [
+      {
+        "title": "아이노바 실험실 최신 배포 파일",
+        "url": "https://browser-extension-v2.web.app/extension-v2/downloads/latest.zip"
+      }
+    ]
+  },
+  {
     "slug": "iNova_OTP_Guide",
     "title": "[가이드] i-Nova 외부 접속을 위한 2단계(OTP) 인증 설정 (앱 링크 포함)",
     "date": "2026-01-22",
