@@ -336,6 +336,7 @@ i-Nova 실험실은 i-Nova 대화 화면 오른쪽에 실험실 패널을 더하
 ### 설치 방법
 
 아래 순서로 설치하면 됩니다.
+이미지와 함께 설치 과정을 확인하려면 [아이노바 실험실 설치 가이드](https://drive.google.com/file/d/1si_ytDOEx9_F0D-fLJnqbapVf8A0y2xG/view?usp=sharing)를 참고하세요.
 
 1. [아이노바 실험실 최신 배포 파일](https://browser-extension-v2.web.app/extension-v2/downloads/latest.zip)을 다운로드합니다.
 2. 다운로드한 ZIP 파일의 압축을 해제합니다.
