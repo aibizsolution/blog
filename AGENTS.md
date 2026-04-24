@@ -53,6 +53,13 @@ npx http-server -p 4173
 node scripts/generate-post-pages.mjs
 ```
 
+- 공유용 표준 URL은 `https://aibizsolution.github.io/blog/posts/<encoded-slug>.html` 형식입니다.
+- `?post=slug`는 브라우저 라우팅용 호환 경로일 뿐 SNS 공유용 표준 URL로 쓰지 않습니다.
+- `.nojekyll` 파일은 삭제하지 않습니다. GitHub Pages의 Jekyll 처리가 켜지면 `posts/*.md`가 자동 HTML로 변환되어 생성된 `posts/*.html`의 OG 메타데이터와 충돌할 수 있습니다.
+- 배포 전에는 생성된 `posts/*.html`에 글별 `og:title`, `og:description`, `og:url`, `<base href="../">`가 들어갔는지 확인합니다.
+- 배포 후에는 대표 글 URL을 `Invoke-WebRequest` 등으로 직접 열어 공개 HTML이 글별 OG 메타데이터를 반환하는지 확인합니다.
+- 카카오톡 등은 공유 캐시가 남을 수 있으므로, 이미 공유된 URL은 필요 시 카카오 공유 디버거에서 재스크랩합니다.
+
 ## 인쇄 동작 (Details 자동 펼침)
 
 `details` 토글이 닫힌 상태에서도 인쇄 시 모두 펼쳐지도록 처리됨.
@@ -64,3 +71,4 @@ node scripts/generate-post-pages.mjs
 2. 저장소 Settings → Pages
 3. Source: `main` / `(root)`
 4. 배포 URL 확인
+5. 글/메타데이터를 수정한 배포라면 대표 `posts/*.html` 공개 URL의 OG 메타데이터 확인
