@@ -27,6 +27,7 @@ npx http-server -p 4173
 
 - 포스트 마크다운: `posts/*.md`
 - 인덱스: `posts.json`
+- 글별 공유 HTML: `posts/*.html` (`node scripts/generate-post-pages.mjs`로 생성)
 - 공용 자료실: `PDS/` (Public Data Storage)
 
 `posts.json` 필드 요약:
@@ -40,8 +41,17 @@ npx http-server -p 4173
 ## 링크/Related Links
 
 - 본문 링크: 마크다운 기본 문법 사용
-- 포스트 간 링크: `?post=slug`
+- 포스트 간 링크: `posts/slug.html`
 - Related Links: `posts.json`의 `links` 배열을 사용
+
+## SNS 공유 미리보기
+
+카카오톡 등 SNS 크롤러는 JavaScript 라우팅 후의 본문이 아니라 정적 HTML의 `<head>` 메타데이터를 읽습니다.
+포스트를 추가하거나 `posts.json`의 제목/요약을 바꾼 뒤에는 아래 명령으로 글별 공유 HTML을 갱신합니다.
+
+```bash
+node scripts/generate-post-pages.mjs
+```
 
 ## 인쇄 동작 (Details 자동 펼침)
 
