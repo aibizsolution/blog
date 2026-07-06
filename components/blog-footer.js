@@ -1,4 +1,4 @@
-import { translations, getCurrentLang } from '../scripts/translations.js';
+import { translations, getCurrentLang } from '../scripts/translations.js?v=20260706-functional-fixes';
 
 class BlogFooter extends HTMLElement {
   connectedCallback() {

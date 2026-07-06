@@ -50,12 +50,20 @@ export async function loadPost(slug) {
       console.error("marked is not available in the global scope");
       return { html: "", error: { message: "Markdown renderer is unavailable." } };
     }
+    if (typeof DOMPurify === "undefined") {
+      console.error("DOMPurify is not available in the global scope");
+      return { html: "", error: { message: "HTML sanitizer is unavailable." } };
+    }
 
     let html = marked.parse(markdown, { breaks: true, gfm: true });
 
     // Custom post-processing to force bold rendering for edge cases (e.g., quotes inside/outside asterisks)
     // Replaces: **"text"** or "**text**" with <strong>"text"</strong>
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = DOMPurify.sanitize(html, {
+      USE_PROFILES: { html: true },
+      ADD_ATTR: ["target"],
+    });
 
     return { html, markdown, error: null };
   } catch (error) {

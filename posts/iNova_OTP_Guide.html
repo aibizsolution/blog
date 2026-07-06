@@ -25,9 +25,9 @@
     <meta http-equiv="Expires" content="0">
     <title>[가이드] i-Nova 외부 접속을 위한 2단계(OTP) 인증 설정 (앱 링크 포함) | AI비즈솔루션팀 블로그</title>
     <link rel="icon" href="favicon.svg">
-    <link rel="stylesheet" href="styles/neo-brutalism.css?v=20260422-toc">
-    <!-- marked.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="styles/neo-brutalism.css?v=20260706-design-tune-3">
+    <script src="scripts/vendor/marked.min.js?v=20260706-functional-fixes"></script>
+    <script src="scripts/vendor/purify.min.js?v=20260706-functional-fixes"></script>
 </head>
 
 <body>
@@ -37,7 +37,8 @@
         <!-- Search Section -->
         <section id="search-section"
             style="margin: 2rem auto; max-width: calc(var(--content-width) - 2rem); padding: 0 1rem;">
-            <input type="text" id="search-input" class="neo-input" placeholder="Search posts by title or tags...">
+            <input type="text" id="search-input" class="neo-input" name="post-search" autocomplete="off"
+                aria-label="게시글 검색" placeholder="제목 또는 태그로 검색하세요…">
             <p id="active-tag" style="margin-top: 0.75rem; color: var(--muted-color);"></p>
         </section>
 
@@ -316,7 +317,7 @@ const posts = await response.json();
                         searchSection.style.display = 'none';
                         contentView.style.display = 'block';
 
-                        contentContainer.innerHTML = 'Loading...';
+                        contentContainer.innerHTML = 'Loading…';
                         const postMeta = allPosts.find((post) => post.slug === slug);
                         const result = getEmbeddedMarkdown(slug);
                         if (result?.markdown) {
@@ -324,7 +325,16 @@ const posts = await response.json();
                                 contentContainer.textContent = result.markdown;
                                 return;
                             }
-                            contentContainer.innerHTML = `${renderPostMeta(postMeta)}${marked.parse(result.markdown)}`;
+                            if (typeof DOMPurify === 'undefined') {
+                                contentContainer.textContent = result.markdown;
+                                return;
+                            }
+                            const renderedHtml = marked.parse(result.markdown);
+                            const safeHtml = DOMPurify.sanitize(renderedHtml, {
+                                USE_PROFILES: { html: true },
+                                ADD_ATTR: ['target'],
+                            });
+                            contentContainer.innerHTML = `${renderPostMeta(postMeta)}${safeHtml}`;
                         } else {
                             const message = result?.error?.message || 'Post not found. Please go back to the list.';
                             contentContainer.innerHTML = `<p>${message}</p>`;
@@ -406,15 +416,15 @@ const posts = await response.json();
     </script>
 
     <!-- Web Components -->
-    <script type="module" src="components/blog-header.js"></script>
-    <script type="module" src="components/blog-footer.js"></script>
+    <script type="module" src="components/blog-header.js?v=20260706-functional-fixes"></script>
+    <script type="module" src="components/blog-footer.js?v=20260706-functional-fixes"></script>
 
     <!-- Main Logic -->
     <script type="module">
-        import { initRouter } from './scripts/router.js';
-        import { initSearch } from './scripts/search.js';
-        import { loadPosts, loadPost } from './scripts/post-loader.js';
-        import { translations, getCurrentLang, setLanguage } from './scripts/translations.js';
+        import { initRouter } from './scripts/router.js?v=20260706-functional-fixes';
+        import { initSearch } from './scripts/search.js?v=20260706-functional-fixes';
+        import { loadPosts, loadPost } from './scripts/post-loader.js?v=20260706-functional-fixes';
+        import { translations, getCurrentLang, setLanguage } from './scripts/translations.js?v=20260706-functional-fixes';
 
         window.__BLOG_BOOTSTRAPPED__ = true;
 
@@ -440,7 +450,10 @@ const posts = await response.json();
 
             // Search input
             const searchInput = document.getElementById('search-input');
-            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+            if (searchInput) {
+                searchInput.placeholder = t.searchPlaceholder;
+                searchInput.setAttribute('aria-label', t.searchLabel);
+            }
 
             // Active tag label
             const activeTagLabel = document.getElementById('active-tag');

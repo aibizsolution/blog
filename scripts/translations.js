@@ -1,10 +1,11 @@
 export const translations = {
     ko: {
         siteTitle: "AI비즈솔루션팀 블로그",
-        searchPlaceholder: "제목 또는 태그로 검색하세요...",
+        searchPlaceholder: "제목 또는 태그로 검색하세요…",
+        searchLabel: "게시글 검색",
         home: "홈",
         backToList: "← 목록으로 돌아가기",
-        loading: "로딩 중...",
+        loading: "로딩 중…",
         contents: "목차",
         noPosts: "포스트가 없습니다.",
         activeTag: "선택된 태그:",
@@ -21,10 +22,11 @@ export const translations = {
     },
     en: {
         siteTitle: "AI Biz Solution Team Blog",
-        searchPlaceholder: "Search posts by title or tags...",
+        searchPlaceholder: "Search posts by title or tags…",
+        searchLabel: "Search posts",
         home: "HOME",
         backToList: "← Back to list",
-        loading: "Loading...",
+        loading: "Loading…",
         contents: "Contents",
         noPosts: "No posts found.",
         activeTag: "Active tag:",
